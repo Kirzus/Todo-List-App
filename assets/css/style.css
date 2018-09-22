@@ -41,10 +41,24 @@ form {
     width: 100%;
 }
 
+.todo:first-child {
+    margin-top: 0.5em;
+}
+
 .todo {
     display: grid;
     grid-template-columns: 20px minmax(100px,100%) repeat(2, 1fr);
     grid-template-rows: 30px; 
+}
+
+.todo > input {
+    align-self: center;
+}
+
+.todo > label,
+.todo > i {
+    margin: 0 5px;
+    align-self: center;
 }
 
 .settings {
