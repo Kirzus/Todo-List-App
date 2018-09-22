@@ -35,10 +35,16 @@ form {
     width: 100%;
     grid-column: 2;
     justify-self: center;
+    border: 1px solid;
 }
 
-.input {
+.input[type="text"] {
     width: 100%;
+}
+
+.list-todos {
+    height: 90vh;
+    overflow: auto;
 }
 
 .todo:first-child {
@@ -64,4 +70,9 @@ form {
 .settings {
     grid-column: 3;
     justify-self: end;
+}
+
+.done {
+    text-decoration-line: line-through;
+    font-style: italic;
 }
