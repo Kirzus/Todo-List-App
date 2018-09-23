@@ -26,23 +26,27 @@ main {
 
 .main-container{
     display: grid;
-    grid-template-columns: 200px minmax(300px,100%) 200px;
+    grid-template-columns: 300px minmax(300px,100%) 300px;
     width: 95%;
     margin-top: 2em;
 }
 
-form {
+.todolist-container {
     width: 100%;
     grid-column: 2;
     justify-self: center;
     border: 1px solid;
 }
 
-.input[type="text"] {
+.todolist-name {
+    width: 90%;
+}
+
+.todos-input {
     width: 100%;
 }
 
-.list-todos {
+.todos-container {
     height: 90vh;
     overflow: auto;
 }
@@ -67,9 +71,22 @@ form {
     align-self: center;
 }
 
-.settings {
+.general-settings {
     grid-column: 3;
     justify-self: end;
+}
+
+.todolist-settings-content {
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 0px 16px;
+    z-index: 1;
+}
+
+.hide {
+    display: none;
 }
 
 .done {
