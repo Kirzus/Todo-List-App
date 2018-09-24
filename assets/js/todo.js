@@ -84,42 +84,36 @@ function addTodo() {
         }
     });
 }
-console.log($(".todo-text").is(":focus"));
 
 function renameTodo() {
+    //Outside flag to check on first click
+    var open = false;
+    //Switch to input tag on clicking edit btn
     $(".todos-container").on("click", ".todo-edit", function() {
-        // var focused = $(".todo-text").is(":focus");
-        // console.log(focused);
-        while ($("input.todo-text").is(":focus") === false) {
+        open = !open;
+        if (open) {
             var todoTxt = $(this).siblings(".todo-text");
             var txt = todoTxt.text();
-            // console.log(txt);
             $(todoTxt).replaceWith("<input type='text' class='todo-text'>")
             $("input.todo-text").focus();
             $("input.todo-text").val(txt);
-            console.log($("input.todo-text").is(":focus"));
         }
     });
-    
+    //Save data on input blur and switch back to a label
     $(".todos-container").on("blur", "input.todo-text", function() {
         if ($(this).val() !== "") {
             var todoIndex = $(this).parent().index();
             todos[todoIndex] = $(this).val();
             $(this).replaceWith("<label class='todo-text'>" + $(this).val() + "</label>");
             console.log(todos);
-            console.log($("input.todo-text").is(":focus"));
         }
     });
-//When renaming save todo and get back to a <label>
+    //When renaming save todo and get back to a label
     $(".todos-container").on("keypress", "input.todo-text", function(e) {
         if (e.which === 13) {
             e.preventDefault();
             if ($(this).val() !== "") {
                 $(this).trigger("blur");
-                // var todoIndex = $(this).parent().index();
-                // todos[todoIndex] = $(this).val();
-                // $(this).replaceWith("<label class='todo-text'>" + $(this).val() + "</label>");
-                // console.log(todos);
             }
         }
     });
@@ -151,10 +145,49 @@ function doneTodo() {
 }
 
 
-//Renametodo
-//Addtodo
-//Removetodo
-//RenameTodolist
-//RemoveTodolist
-//Addtodolist
-//ChangetodolistIcon
+
+// TODO: TodoListApp Features:
+
+// Rename a Todo [Done]
+    // Switch from label to input [DONE]
+    // Pass in label value to input value [DONE]
+    // VICE VERSA [DONE]
+    // Prevent from reset of code [DONE]
+
+// Create DOM elements on Side menu
+// Create Todolist Data structure
+
+//Drag & Drop Todos
+    // While drag, move div on y axis
+    // On drop, store Y position data
+    // Check position data relatively to other todos
+    // If this y position = todo position , then this.insertAfter("todo");
+    // If this y poistion = !todo, then this.insertAfter("last-todo");
+
+// Add a TodoList
+    // Add data 
+
+// Delete a Todolist 
+    // When Todolist todolist-delete clicked
+    // Display a customed alert message
+    // Delete the current Todolist in data
+    // Delete DOM elements 
+    // switchTodolist() to the next Todolist in Data 
+
+// Switch between Todolists
+    // When Todolist is clicked 
+    // switchTodolist() to clicked Todolist
+
+// switchTodolist(currentTodolist, nextTodolist)
+    // Delete current Todolist DOM elements
+    // Get data from Todolists
+    // Create corresponding DOM Elements
+
+// Change todoList Icon
+
+// Change General Theme
+
+// Add a todo [Done]
+// Remove a Todo [Done]
+// Rename a Todo List [Done]
+
