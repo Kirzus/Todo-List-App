@@ -91,5 +91,11 @@ main {
 
 .done {
     text-decoration-line: line-through;
-    font-style: italic;
+    /* font-style: italic; */
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border: none;
+    margin-left: 5px;
 }
