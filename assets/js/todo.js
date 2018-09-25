@@ -1,11 +1,4 @@
-// var list = {
-//     listName: "",
-//     todos: []
-// }
-// var defaultList {
-//     listName: "Give me a name"
-// }
-
+// Object Data structure
 var todolists = [
     {
         listName: "Todolist",
@@ -17,45 +10,52 @@ var todolists = [
     }
 ]
 
+//Store todos data
 var todos = [];
 
-// var currentList = defaultList;
-
-//Set default value
+//Set default value name of todolist
 $(".todolist-name").val("Todolist");
 
-//
-$(".todolist-settings").on("click", function() {
-    $(".todolist-settings-content").toggleClass("hide");
-});
-
-//Hide dropdown content when click outside of it
-$(window).click(function(e) {
-    if (!e.target.matches(".todolist-settings")) {
-        $(".todolist-settings-content").addClass("hide");
-    }
-});
-
-$(".todolist-rename").on("click", function() {
-    $(".todolist-name").removeAttr("disabled");
-    $(".todolist-name").focus();
-});
-
-$(".todolist-name").on("keypress", function(e) {
-    //Press enter to disable input
-    if (e.which === 13) {
-        //Prevent input text from submitting form
-        e.preventDefault();
-        $(this).attr("disabled", "disabled");
-    }
-});
-//Disable input when not text unfocused
-$(".todolist-name").focusout(function() {
-    $(this).attr("disabled", "disabled");
-})
-
 todoActions();
+listActions();
 
+// *** Actions for TodoLists *** //
+function listActions() {
+    //Toggle todolist possible actions on clicking settings btn
+    $(".todolist-settings").on("click", function() {
+        $(".todolist-settings-content").toggleClass("hide");
+    });
+    //Hide dropdown list settings content when user click outside of it
+    $(window).click(function(e) {
+        if (!e.target.matches(".todolist-settings")) {
+            $(".todolist-settings-content").addClass("hide");
+        }
+    });
+    renameList();
+}
+
+function renameList() {
+    //Enable todolist input and focus on it
+    $(".todolist-rename").on("click", function() {
+        $(".todolist-name").removeAttr("disabled");
+        $(".todolist-name").focus();
+    });
+    //Pressing enter saves renamed totolist by disabling input area
+    $(".todolist-name").on("keypress", function(e) {
+        //Press enter to disable input
+        if (e.which === 13) {
+            //Prevent input text from submitting form
+            e.preventDefault();
+            $(this).attr("disabled", "disabled");
+        }
+    });
+    //Disable input when text unfocused
+    $(".todolist-name").focusout(function() {
+        $(this).attr("disabled", "disabled");
+    });
+}
+
+// *** Actions for Todos *** //
 function todoActions() {
     addTodo();
     doneTodo();
@@ -69,6 +69,7 @@ function addTodo() {
         if (e.which === 13) {
             //Prevent input text from submitting form
             e.preventDefault();
+            //Store todo and creates DOM element if not empty
             while ($(this).val() !== "") {
                 todos.unshift($(this).val());
                 $(".todos-container").prepend(
@@ -86,29 +87,39 @@ function addTodo() {
 }
 
 function renameTodo() {
-    //Outside flag to check on first click
-    var open = false;
-    //Switch to input tag on clicking edit btn
+    var inputHtml = "<input type='text' class='todo-text'>";
+    //Change DOM elem to input tag on clicking edit btn
     $(".todos-container").on("click", ".todo-edit", function() {
-        open = !open;
-        if (open) {
             var todoTxt = $(this).siblings(".todo-text");
             var txt = todoTxt.text();
-            $(todoTxt).replaceWith("<input type='text' class='todo-text'>")
+            // Check if it's already a done todo
+            if (todoTxt.hasClass("done")) {
+                $(todoTxt).replaceWith(inputHtml)
+                $("input.todo-text").addClass("done");
+                // Remove the line through for visibilty upon renaming
+                $("input.todo-text").css("text-decoration-line", "none");
+            } else {
+                $(todoTxt).replaceWith(inputHtml);
+            }
             $("input.todo-text").focus();
             $("input.todo-text").val(txt);
-        }
+        // }
     });
-    //Save data on input blur and switch back to a label
+    //Save data on input blur and switch back to a label tag
     $(".todos-container").on("blur", "input.todo-text", function() {
         if ($(this).val() !== "") {
+            $(this).removeAttr("style");
             var todoIndex = $(this).parent().index();
             todos[todoIndex] = $(this).val();
-            $(this).replaceWith("<label class='todo-text'>" + $(this).val() + "</label>");
+            if ($(this).hasClass("done")) {
+                $(this).replaceWith("<label class='todo-text done'>" + $(this).val() + "</label>");
+            } else {
+                $(this).replaceWith("<label class='todo-text'>" + $(this).val() + "</label>");
+            }
             console.log(todos);
         }
     });
-    //When renaming save todo and get back to a label
+    //Pressing enter saves todo and get back to a label tag by trigerring blur
     $(".todos-container").on("keypress", "input.todo-text", function(e) {
         if (e.which === 13) {
             e.preventDefault();
@@ -118,7 +129,6 @@ function renameTodo() {
         }
     });
 }
-
 
 function removeTodo() {
     $(".todos-container").on("click", ".todo-delete", function() {
@@ -145,17 +155,11 @@ function doneTodo() {
 }
 
 
-
 // TODO: TodoListApp Features:
 
-// Rename a Todo [Done]
-    // Switch from label to input [DONE]
-    // Pass in label value to input value [DONE]
-    // VICE VERSA [DONE]
-    // Prevent from reset of code [DONE]
+// Create Todolist Data structure
 
 // Create DOM elements on Side menu
-// Create Todolist Data structure
 
 //Drag & Drop Todos
     // While drag, move div on y axis
@@ -191,3 +195,8 @@ function doneTodo() {
 // Remove a Todo [Done]
 // Rename a Todo List [Done]
 
+// Rename a Todo [Done]
+    // Switch from label to input [DONE]
+    // Pass in label value to input value [DONE]
+    // VICE VERSA [DONE]
+    // Prevent from reset of code [DONE]
