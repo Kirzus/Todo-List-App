@@ -58,10 +58,15 @@ function renameList() {
 // *** Actions for Todos *** //
 function todoActions() {
     addTodo();
+    sortTodo()
     doneTodo();
     renameTodo();
     removeTodo();
 } 
+
+function sortTodo() {
+    $(".todos-container").sortable();
+}
 
 function addTodo() {
 //Get user todo input and store it in todos array
@@ -90,9 +95,10 @@ function renameTodo() {
     var inputHtml = "<input type='text' class='todo-text'>";
     //Change DOM elem to input tag on clicking edit btn
     $(".todos-container").on("click", ".todo-edit", function() {
-            var todoTxt = $(this).siblings(".todo-text");
-            var txt = todoTxt.text();
-            // Check if it's already a done todo
+        var todoTxt = $(this).siblings(".todo-text");
+        var txt = todoTxt.text();
+        console.log($(todoTxt).prop("tagName"));
+        // Check if it's already a done todo
             if (todoTxt.hasClass("done")) {
                 $(todoTxt).replaceWith(inputHtml)
                 $("input.todo-text").addClass("done");
@@ -103,7 +109,6 @@ function renameTodo() {
             }
             $("input.todo-text").focus();
             $("input.todo-text").val(txt);
-        // }
     });
     //Save data on input blur and switch back to a label tag
     $(".todos-container").on("blur", "input.todo-text", function() {
