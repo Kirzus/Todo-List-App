@@ -1,20 +1,17 @@
-// Object Data structure
-var todolists = [
-    {
-        listName: "Todolist",
-        todos: []
-    },
-    {
-        listName: "Lol",
-        todos: []
-    }
-]
+// Set a Default Todolist
+var defaultTodolist = new Todolist("Todolist");
+
+function Todolist(listName) {
+    this.listName = listName;
+    this.todos = [];
+}
 
 //Store todos data
 var todos = [];
 
 //Set default value name of todolist
-$(".todolist-name").val("Todolist");
+$(".todolist-name").val(defaultTodolist.listName);
+defaultTodolist.todos.push("lol", "mdr", "yo");
 
 todoActions();
 listActions();
@@ -32,6 +29,10 @@ function listActions() {
         }
     });
     renameList();
+}
+
+function addList() {
+
 }
 
 function renameList() {
@@ -57,7 +58,7 @@ function renameList() {
 
 // *** Actions for Todos *** //
 function todoActions() {
-    addTodo();
+    addTodo(defaultTodolist.todos);
     sortTodo()
     doneTodo();
     renameTodo();
@@ -65,11 +66,24 @@ function todoActions() {
 } 
 
 function sortTodo() {
-    $(".todos-container").sortable();
+    $(".todos-todo").sortable({
+        items: ".todo"
+    });
 }
 
-function addTodo() {
-//Get user todo input and store it in todos array
+function addTodo(arr) {
+    // Set up Default todos on load
+    for (i = 0; i < arr.length; i++) {
+        $(".todos-todo").prepend(
+            "<div class='todo'><input type='checkbox'>" +
+            "<label>" + arr[i] + "</label>" + 
+            "<i class='fas fa-edit'></i>" + 
+            "<i class='fas fa-trash-alt'></i></div>");
+        $(".todos-container label").addClass("todo-text");
+        $(".fa-edit").addClass("todo-edit");
+        $(".fa-trash-alt").addClass("todo-delete");
+    }
+    //Get user todo input and store it in todos array
     $(".todos-input").on("keypress", function(e) {
         if (e.which === 13) {
             //Prevent input text from submitting form
@@ -77,7 +91,7 @@ function addTodo() {
             //Store todo and creates DOM element if not empty
             while ($(this).val() !== "") {
                 todos.unshift($(this).val());
-                $(".todos-container").prepend(
+                $(".todos-todo").prepend(
                     "<div class='todo'><input type='checkbox'>" +
                     "<label>" + $(this).val() + "</label>" + 
                     "<i class='fas fa-edit'></i>" + 
@@ -105,7 +119,7 @@ function renameTodo() {
                 // Remove the line through for visibilty upon renaming
                 $("input.todo-text").css("text-decoration-line", "none");
             } else {
-                $(todoTxt).replaceWith(inputHtml);
+                $(todoTxt).replaceWith(inputHtml); // FIXME: Error code on a problem of node parent and blur.
             }
         $("input.todo-text").focus();
         // Transfer the txt value to the changed tag: input
@@ -141,9 +155,18 @@ function removeTodo() {
         //Select and store the current todo 
         var todo = $(this).parent();
         //Remove the todo & its data
-        todos.splice(todo.index(), 1);
+        // if ($(".todo").parent().hasClass("todos-done") === true) { FIXME: Redo data array system
+        //     // for (i = 0; i < todo.index().length; i--) {
+        //     var x = todo.index() - 1;
+        //     todos.splice(x, 1);
+        //     // }
+        // } else {
+            console.log(todo.index());
+            todos.splice(todo.index(), 1);
+        // }
         todo.remove();
         removeDoneTitle();
+        console.log(todos);
     });
 }
 
@@ -151,7 +174,7 @@ function doneTodo() {
     $(".todos-container").on("click", "input[type=checkbox]", function() {
         //Store todo text only
         var todoTxt = $(this).siblings(".todo-text");
-        var lastTodo = $(".todo").last();
+        var lastTodo = $(".todos-todo").children().last();
         if ($(this).prop("checked") !== false) {
             //Add a line through to the text of todo
             todoTxt.addClass("done");
@@ -160,7 +183,11 @@ function doneTodo() {
         } else {
             //Remove line through to the text of todo
             todoTxt.removeClass("done");
-            $(this).parent().insertBefore(".todos-done");
+            if (lastTodo.length !== 0) {
+                $(this).parent().insertAfter(lastTodo);
+            } else {
+                $(this).parent().appendTo($(".todos-todo"));
+            }
             removeDoneTitle();
         }
     });
