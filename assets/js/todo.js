@@ -100,15 +100,16 @@ function renameTodo() {
         console.log($(todoTxt).prop("tagName"));
         // Check if it's already a done todo
             if (todoTxt.hasClass("done")) {
-                $(todoTxt).replaceWith(inputHtml)
+                $(todoTxt).replaceWith(inputHtml);
                 $("input.todo-text").addClass("done");
                 // Remove the line through for visibilty upon renaming
                 $("input.todo-text").css("text-decoration-line", "none");
             } else {
                 $(todoTxt).replaceWith(inputHtml);
             }
-            $("input.todo-text").focus();
-            $("input.todo-text").val(txt);
+        $("input.todo-text").focus();
+        // Transfer the txt value to the changed tag: input
+        $("input.todo-text").val(txt);
     });
     //Save data on input blur and switch back to a label tag
     $(".todos-container").on("blur", "input.todo-text", function() {
@@ -142,6 +143,7 @@ function removeTodo() {
         //Remove the todo & its data
         todos.splice(todo.index(), 1);
         todo.remove();
+        removeDoneTitle();
     });
 }
 
@@ -149,16 +151,26 @@ function doneTodo() {
     $(".todos-container").on("click", "input[type=checkbox]", function() {
         //Store todo text only
         var todoTxt = $(this).siblings(".todo-text");
+        var lastTodo = $(".todo").last();
         if ($(this).prop("checked") !== false) {
             //Add a line through to the text of todo
             todoTxt.addClass("done");
+            $("h2").removeClass("hide");
+            $(this).parent().insertAfter($("h2"));
         } else {
             //Remove line through to the text of todo
             todoTxt.removeClass("done");
+            $(this).parent().insertBefore(".todos-done");
+            removeDoneTitle();
         }
     });
 }
 
+function removeDoneTitle() {
+    if ($(".todos-done").find(".todo").length === 0) {
+        $("h2").addClass("hide");
+    }
+}
 
 // TODO: TodoListApp Features:
 
