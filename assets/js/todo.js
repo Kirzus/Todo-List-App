@@ -1,17 +1,19 @@
 // Set a Default Todolist
 var defaultTodolist = new Todolist("Todolist");
+var currentList = defaultTodolist;
 
 function Todolist(listName) {
     this.listName = listName;
     this.todos = [];
+    this.todosDone = [];
 }
-
-//Store todos data
-var todos = [];
 
 //Set default value name of todolist
 $(".todolist-name").val(defaultTodolist.listName);
-defaultTodolist.todos.push("lol", "mdr", "yo");
+defaultTodolist.todos.unshift("lol");
+defaultTodolist.todos.unshift("mdr");
+defaultTodolist.todos.unshift("yo");
+
 
 todoActions();
 listActions();
@@ -67,13 +69,19 @@ function todoActions() {
 
 function sortTodo() {
     $(".todos-todo").sortable({
-        items: ".todo"
+        items: ".todo",
+        // Keep the mouse vertically in the middle of the todo div 
+        cursor: "move",
+        cursorAt: {
+            top: $(".todo").height() / 2
+        },
+        revert: true
     });
 }
 
 function addTodo(arr) {
     // Set up Default todos on load
-    for (i = 0; i < arr.length; i++) {
+    for (i = arr.length - 1; i >= 0; i--) {
         $(".todos-todo").prepend(
             "<div class='todo'><input type='checkbox'>" +
             "<label>" + arr[i] + "</label>" + 
@@ -90,7 +98,7 @@ function addTodo(arr) {
             e.preventDefault();
             //Store todo and creates DOM element if not empty
             while ($(this).val() !== "") {
-                todos.unshift($(this).val());
+                currentList.todos.unshift($(this).val());
                 $(".todos-todo").prepend(
                     "<div class='todo'><input type='checkbox'>" +
                     "<label>" + $(this).val() + "</label>" + 
@@ -130,13 +138,13 @@ function renameTodo() {
         if ($(this).val() !== "") {
             $(this).removeAttr("style");
             var todoIndex = $(this).parent().index();
-            todos[todoIndex] = $(this).val();
+            currentList.todos[todoIndex] = $(this).val();
             if ($(this).hasClass("done")) {
                 $(this).replaceWith("<label class='todo-text done'>" + $(this).val() + "</label>");
             } else {
                 $(this).replaceWith("<label class='todo-text'>" + $(this).val() + "</label>");
             }
-            console.log(todos);
+            console.log(currentList.todos);
         }
     });
     //Pressing enter saves todo and get back to a label tag by trigerring blur
@@ -155,18 +163,16 @@ function removeTodo() {
         //Select and store the current todo 
         var todo = $(this).parent();
         //Remove the todo & its data
-        // if ($(".todo").parent().hasClass("todos-done") === true) { FIXME: Redo data array system
-        //     // for (i = 0; i < todo.index().length; i--) {
-        //     var x = todo.index() - 1;
-        //     todos.splice(x, 1);
-        //     // }
-        // } else {
-            console.log(todo.index());
-            todos.splice(todo.index(), 1);
+        if ($(".todo").parent().hasClass("todos-done") === true) {
+            var x = todo.index() - 1;
+            currentList.todosDone.splice(x, 1);
+        } else {
+            currentList.todos.splice(todo.index(), 1);
         // }
+        }
         todo.remove();
         removeDoneTitle();
-        console.log(todos);
+        console.log(currentList.todos);
     });
 }
 
@@ -175,12 +181,25 @@ function doneTodo() {
         //Store todo text only
         var todoTxt = $(this).siblings(".todo-text");
         var lastTodo = $(".todos-todo").children().last();
+        var todo = $(this).parent();
         if ($(this).prop("checked") !== false) {
+            // Delete data from todos array and store it in todosDone
+            currentList.todosDone.unshift(todoTxt.text());
+            console.log(currentList.todos);
+            console.log(currentList.todosDone);
+            currentList.todos.splice(todo.index(), 1);         
+            console.log(currentList.todos);
+            console.log(currentList.todosDone);   
             //Add a line through to the text of todo
             todoTxt.addClass("done");
             $("h2").removeClass("hide");
             $(this).parent().insertAfter($("h2"));
         } else {
+            var titleIndex = 1;
+            currentList.todos.push(todoTxt.text());
+            currentList.todosDone.splice(todo.index() - titleIndex, 1);
+            console.log(currentList.todos);
+            console.log(currentList.todosDone);
             //Remove line through to the text of todo
             todoTxt.removeClass("done");
             if (lastTodo.length !== 0) {
@@ -198,49 +217,3 @@ function removeDoneTitle() {
         $("h2").addClass("hide");
     }
 }
-
-// TODO: TodoListApp Features:
-
-// Create Todolist Data structure
-
-// Create DOM elements on Side menu
-
-//Drag & Drop Todos
-    // While drag, move div on y axis
-    // On drop, store Y position data
-    // Check position data relatively to other todos
-    // If this y position = todo position , then this.insertAfter("todo");
-    // If this y poistion = !todo, then this.insertAfter("last-todo");
-
-// Add a TodoList
-    // Add data 
-
-// Delete a Todolist 
-    // When Todolist todolist-delete clicked
-    // Display a customed alert message
-    // Delete the current Todolist in data
-    // Delete DOM elements 
-    // switchTodolist() to the next Todolist in Data 
-
-// Switch between Todolists
-    // When Todolist is clicked 
-    // switchTodolist() to clicked Todolist
-
-// switchTodolist(currentTodolist, nextTodolist)
-    // Delete current Todolist DOM elements
-    // Get data from Todolists
-    // Create corresponding DOM Elements
-
-// Change todoList Icon
-
-// Change General Theme
-
-// Add a todo [Done]
-// Remove a Todo [Done]
-// Rename a Todo List [Done]
-
-// Rename a Todo [Done]
-    // Switch from label to input [DONE]
-    // Pass in label value to input value [DONE]
-    // VICE VERSA [DONE]
-    // Prevent from reset of code [DONE]
