@@ -60,6 +60,7 @@ main {
     display: grid;
     grid-template-columns: 20px minmax(100px,100%) repeat(2, 1fr);
     grid-template-rows: 30px; 
+    border: 1px solid;
 }
 
 .todo > input {
