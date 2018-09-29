@@ -68,14 +68,27 @@ function todoActions() {
 } 
 
 function sortTodo() {
-    $(".todos-todo").sortable({
+    $(".todos-todo")
+    .sortable({
         items: ".todo",
         // Keep the mouse vertically in the middle of the todo div 
         cursor: "move",
         cursorAt: {
             top: $(".todo").height() / 2
         },
-        revert: true
+        revert: true,
+        // Delete grabbed item data at index in array
+        start: function(event, ui) {
+            currentList.todos.splice($(ui.item).index(), 1);
+            console.log(currentList.todos);
+        },
+        // On Stopping sorting, put data after the previous item's index in array
+        stop: function(event, ui) {
+            var previousItem = $(ui.item).prev();
+            var itemTxt = $(ui.item).text();
+            currentList.todos.splice($(previousItem).index() + 1, 0, itemTxt);
+            console.log(currentList.todos);
+        }
     });
 }
 
