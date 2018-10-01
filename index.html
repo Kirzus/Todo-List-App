@@ -23,16 +23,24 @@
     </header>
     <main>
         <div class="main-container">
+            <!-- List of Todolists -->
             <div class="side-menu">
-                <div class="todolistsAddBtn-container">
+                <!-- Add Totolist -->
+                <div class="todolistsAdd-container">
                     <i class="fas fa-plus-circle"></i>
                 </div>
+                <!-- Todolists -->
                 <div class="todolists"></div>
             </div>
+            <!-- Current Todolist -->
             <div class="todolist-container">
+                <!-- Todolist Header  -->
                 <div class="todolist-name-container">
+                    <!-- Icon -->
                     <i class="far fa-bookmark"></i>
+                    <!-- Name -->
                     <input type="text" class="todolist-name" disabled="disabled">
+                    <!-- Todolist settings -->
                     <div class="todolist-settings-container">
                         <i class="fas fa-ellipsis-h todolist-settings"></i>
                         <div class="todolist-settings-content hide">
@@ -42,7 +50,9 @@
                         </div>
                     </div>
                 </div>
+                <!-- Todos Input -->
                 <input type="text" class="todos-input" placeholder="Add a new todo">
+                <!-- Todos -->
                 <div class="todos-container">
                     <div class="todos-todo"></div>
                     <div class="todos-done">
@@ -50,6 +60,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Side settings -->
             <div class="general-settings">
                 <input type="radio">
                 <label>Night mode</label>
