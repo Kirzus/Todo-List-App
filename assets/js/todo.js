@@ -38,33 +38,55 @@ for (i = 0; i < allIconsSolid.length; i++) {
 for (i = 0; i < allIconsBrand.length; i++) {
     allIcons.push(new IconBrand(allIconsBrand[i]));
 }
-// Add all icons to dom
-for (i = 0; i < allIcons.length; i++) {
+// Add a first 16 icons to dom
+for (i = 0; i < 16; i++) {
+    appendIcons();
+}
+// Icons Search
+$(".icons-search").on("keyup", function(e) {
+    var value = $(this).val();
+    var exp = new RegExp(value);
+    $(".awesome-icon").each(function(){
+        $(this).remove();
+    });
+    if (value !== "") {
+        for (i = 0; i < allIcons.length; i++) {
+            var matchArr = exp.test(allIcons[i].name);
+            if (matchArr === true) {
+                appendIcons();
+            }
+        }
+    } else {
+        for (i = 0; i < 16; i++) {
+            appendIcons();
+        }
+    }
+});
+
+function appendIcons() {
     $(".icons-grid").append(
         "<div class='awesome-icon'>" +
         "<i class='" +
         allIcons[i].imgClass + "'></i>" +
         "</div>")
-        // .addClass("hide");
 }
+// $(".icons-search").on("keyup", function(e) {
+//     var value = $(this).val();
+//     var exp = new RegExp(value);
+    // $(".awesome-icon i").each(function() {
+    //     var isMatch = exp.test($(this).attr("class"));
+    //     console.log(isMatch);
+    //     if (isMatch === true) {
+    //         $(this).parent().removeClass("hide");
+    //     } else {
+    //         $(this).parent().addClass("hide");
+    //     }
+    // });
 
-$(".icons-search").on("keyup", function() {
-    var value = $(this).val();
-    var exp = new RegExp(value);
-
-    $(".awesome-icon i").each(function() {
-        var isMatch = exp.test($(this).attr("class"));
-        console.log(isMatch);
-        if (isMatch === true) {
-            // $(this).css("color", "red");
-            $(this).parent().removeClass("hide");
-        } else {
-            // $(this).css("color", "white");
-            $(this).parent().addClass("hide");
-        }
-        // $(this).toggle(isMatch);
-    });
-});
+//     if (value === "") {
+//         $(".awesome-icon").removeClass("hide");
+//     }
+// });
 
 // // Search function for icons
 // $("input.all-icons").autocomplete({
