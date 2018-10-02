@@ -53,6 +53,15 @@ main {
     width: 100%;
 }
 
+.icons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 1em;
+    overflow: auto;
+    height: 400px;
+}
+
 .todolist-container {
     width: 100%;
     grid-column: 2;
