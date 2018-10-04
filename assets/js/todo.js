@@ -38,15 +38,27 @@ for (i = 0; i < allIconsSolid.length; i++) {
 for (i = 0; i < allIconsBrand.length; i++) {
     allIcons.push(new IconBrand(allIconsBrand[i]));
 }
-// Add a first 16 icons to dom
-for (i = 0; i < 16; i++) {
+
+var maxIconsLoad = 32;
+// Add the first 32 icons to dom
+for (i = 0; i < maxIconsLoad; i++) {
     appendIcons();
 }
+// Load more icons on btn clicked
+$(".icons-loadBtn").on("click", function() {
+    if ($(".icons-search").val() === "") {
+        // Get current length of icons on display
+        var iconsLength = $(".icons-grid.icon-awesome").length;
+        for (i = iconsLength + 1; i < (iconsLength + maxIconsLoad) + 1; i++) {
+            appendIcons();
+        }
+    }      
+});
 // Icons Search
-$(".icons-search").on("keyup", function(e) {
+$(".icons-search").on("keyup", function() {
     var value = $(this).val();
     var exp = new RegExp(value);
-    $(".awesome-icon").each(function(){
+    $(".icon-awesome").each(function(){
         $(this).remove();
     });
     if (value !== "") {
@@ -57,42 +69,28 @@ $(".icons-search").on("keyup", function(e) {
             }
         }
     } else {
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < maxIconsLoad; i++) {
             appendIcons();
         }
     }
 });
+// On click saves and displays icon
+$(".icons-grid").on("click", ".icon-awesome", function() {
+    var iconHtml = $(this).html();
+    $(".dialog-icons").prepend("<div class='icon-selected'>" + iconHtml + "</div>");
+});
+
+// function changeIcon(icon) {
+//     currentList.listName = icon;
+// }
 
 function appendIcons() {
     $(".icons-grid").append(
-        "<div class='awesome-icon'>" +
+        "<li class='icon-awesome'>" +
         "<i class='" +
         allIcons[i].imgClass + "'></i>" +
-        "</div>")
+        "</li>");
 }
-// $(".icons-search").on("keyup", function(e) {
-//     var value = $(this).val();
-//     var exp = new RegExp(value);
-    // $(".awesome-icon i").each(function() {
-    //     var isMatch = exp.test($(this).attr("class"));
-    //     console.log(isMatch);
-    //     if (isMatch === true) {
-    //         $(this).parent().removeClass("hide");
-    //     } else {
-    //         $(this).parent().addClass("hide");
-    //     }
-    // });
-
-//     if (value === "") {
-//         $(".awesome-icon").removeClass("hide");
-//     }
-// });
-
-// // Search function for icons
-// $("input.all-icons").autocomplete({
-//     minLength: 1,
-//     source: allIconsName
-// });
 
 // Set default todolist data
 $(".todolist-name").val(defaultTodolist.listName);
