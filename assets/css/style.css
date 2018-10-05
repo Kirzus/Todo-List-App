@@ -49,6 +49,7 @@ main {
     margin: 30% 30% 0% 30%;
 }
 
+.dialog input,
 .dialog button {
     width: 100%;
 }
@@ -82,6 +83,12 @@ main {
 .todos-container {
     height: 90vh;
     overflow: auto;
+}
+
+.todos-container input[type="text"]:focus {
+    outline: none;
+    border: none;
+    margin-left: 5px;
 }
 
 .todo:first-child {
@@ -126,10 +133,4 @@ main {
 .done {
     text-decoration-line: line-through;
     /* font-style: italic; */
-}
-
-input[type="text"]:focus {
-    outline: none;
-    border: none;
-    margin-left: 5px;
 }
