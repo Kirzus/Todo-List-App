@@ -35,36 +35,38 @@ for (i = 0; i < allIconsSolid.length; i++) {
 for (i = 0; i < allIconsBrand.length; i++) {
     allIcons.push(new IconBrand(allIconsBrand[i]));
 }
-// Set default todolist data
-$(".todolist-name").val(defaultTodolist.listName);
-defaultTodolist.todos.unshift("lol");
-defaultTodolist.todos.unshift("mdr");
-defaultTodolist.todos.unshift("yo");
-defaultTodolist.icon = "far fa-bookmark";
 
 // Run core features functions
-todoActions();
 listActions();
+todoActions();
 
 // *** Actions for TodoLists *** //
 function listActions() {
     // Add todolist of defaultTodolist on load
-    addList(currentList);
+    addList(defaultTodolist, "far fa-bookmark");
+    // Set default todolist data
+    $(".todolist-name").val(defaultTodolist.listName);
+    defaultTodolist.todos.unshift("lol");
+    defaultTodolist.todos.unshift("mdr");
+    defaultTodolist.todos.unshift("yo");
     // When AddBtn is clicked add a new todolist 
     $(".todolistsAdd-container").on("click", function() {
         insertDialog();
         dialogEvents();
         // Saves data & Removes on pressing enter
-        $(window).on("keyup", function (e) {
-            if (e.which === 13) {
-                removeDialog();
-            }
+        $(".dialog").on("keyup", function (e) {
+                if (e.which === 13) {
+                    $("#dialog-save").click();
+                }
         });
         // Saves data & Removes on clicking save btn
         $("#dialog-save").on("click", function() {
-            removeDialog();
+            var iconIsSelected = $(".dialog-header").children().hasClass("icon-selected");
+            if ($("#dialog-name").val() !== "" && iconIsSelected === true) {
+                removeDialog();
+                newList();
+            }
         });
-        // addList();
         // Prepend dialog & animate
         function insertDialog() {
             $(".main-container").prepend(
@@ -172,6 +174,11 @@ function listActions() {
                 $(this).remove();
             });              
         }
+        function newList() {
+            var selectedName = $(".dialog-main input").val();
+            var selectedIcon = $(".icon-selected i").attr("class");
+            addList(new Todolist(selectedName), selectedIcon);
+        }
     });
     //Toggle todolist possible actions on clicking settings btn
     $(".todolist-settings").on("click", function() {
@@ -186,17 +193,18 @@ function listActions() {
     renameList();
 }
 
-function addList(obj) {
+function addList(obj, icon) {
+     // Store new todolist object in todolists array
+     allTodolists.push(obj);
+     // Added todolist is now the current todolist to be displayed
+     currentList = obj;
+     obj.icon = icon;
     // Add todolist Dom elements at the end of the todolists div
     $(".todolists").append(
         "<div class='todolist'>" +
         "<i class='" + obj.icon + "'></i>" +
         "<p>" + obj.listName + "</p>" +
         "</div>");
-    // Store new todolist object in todolists array
-    allTodolists.push(obj);
-    // Added todolist is now the current todolist to be displayed
-    currentList = obj;
 }
 
 function renameList() {
@@ -225,6 +233,19 @@ function renameList() {
 // *** Actions for Todos *** //
 function todoActions() {
     addTodo(defaultTodolist.todos);
+    //Get user todo input and store it in todos array
+    $(".todos-input").on("keypress", function(e) {
+        if (e.which === 13) {
+            //Prevent input text from submitting form
+            e.preventDefault();
+            //Store todo and creates DOM element if not empty
+            while ($(this).val() !== "") {
+                currentList.todos.unshift($(this).val());
+                prependTodo($(this).val());
+                $(this).val("");
+            }
+        }
+    });
     sortTodo()
     doneTodo();
     renameTodo();
@@ -262,20 +283,8 @@ function addTodo(arr) {
     // Set up default todos on load
     for (i = arr.length - 1; i >= 0; i--) {
         prependTodo(arr[i]);
+        console.log(arr[i]);
     }
-    //Get user todo input and store it in todos array
-    $(".todos-input").on("keypress", function(e) {
-        if (e.which === 13) {
-            //Prevent input text from submitting form
-            e.preventDefault();
-            //Store todo and creates DOM element if not empty
-            while ($(this).val() !== "") {
-                currentList.todos.unshift($(this).val());
-                prependTodo($(this).val());
-                $(this).val("");
-            }
-        }
-    });
     // Pattern upon inserting todo in DOM
     function prependTodo(val) {
         $(".todos-todo").prepend(
