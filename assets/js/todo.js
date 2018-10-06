@@ -45,7 +45,7 @@ function listActions() {
     // Add todolist of defaultTodolist on load
     addList(defaultTodolist, "far fa-bookmark");
     // Set default todolist data
-    $(".todolist-name").val(defaultTodolist.listName);
+    $(".todolist-name").val(currentList.listName);
     defaultTodolist.todos.unshift("lol");
     defaultTodolist.todos.unshift("mdr");
     defaultTodolist.todos.unshift("yo");
@@ -65,6 +65,8 @@ function listActions() {
             if ($("#dialog-name").val() !== "" && iconIsSelected === true) {
                 removeDialog();
                 newList();
+                $(".todo").remove();
+                $(".todolist-name").val(currentList.listName);
             }
         });
         // Prepend dialog & animate
@@ -194,14 +196,19 @@ function listActions() {
 }
 
 function addList(obj, icon) {
-     // Store new todolist object in todolists array
-     allTodolists.push(obj);
-     // Added todolist is now the current todolist to be displayed
-     currentList = obj;
-     obj.icon = icon;
+    // Store new todolist object in todolists array
+    allTodolists.push(obj);
+    // Added todolist is now the current todolist to be displayed
+    currentList = obj;
+    obj.icon = icon;
+    $(".todolist").each(function(){
+        if ($(this).hasClass("current")) {
+            $(this).removeClass("current");
+        }
+    });
     // Add todolist Dom elements at the end of the todolists div
     $(".todolists").append(
-        "<div class='todolist'>" +
+        "<div class='todolist current'>" +
         "<i class='" + obj.icon + "'></i>" +
         "<p>" + obj.listName + "</p>" +
         "</div>");
@@ -219,15 +226,18 @@ function renameList() {
         if (e.which === 13) {
             // Prevent input text from submitting form
             e.preventDefault();
-            currentList.listName = $(this).val();
-            $(this).attr("disabled", "disabled");
+            addValueOf(this);
         }
     });
     // Disable input and saves data when text unfocused
     $(".todolist-name").focusout(function() {
-        currentList.listName = $(this).val();
-        $(this).attr("disabled", "disabled");
+        addValueOf(this);
     });
+    function addValueOf(sel) {
+        currentList.listName = $(sel).val();
+        $(".current p").text($(sel).val());
+        $(sel).attr("disabled", "disabled");
+    }
 }
 
 // *** Actions for Todos *** //
