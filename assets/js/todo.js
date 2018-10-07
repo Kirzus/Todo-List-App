@@ -192,7 +192,16 @@ function listActions() {
             $(".todolist-settings-content").addClass("hide");
         }
     });
+    $(".todolists").on("click", ".todolist", function() {
+        switchList();
+    });
     renameList();
+
+}
+
+function switchList() {
+    $(".todo").remove();
+    $(".todolist-name").val(currentList.listName);
 }
 
 function addList(obj, icon) {
@@ -295,17 +304,17 @@ function addTodo(arr) {
         prependTodo(arr[i]);
         console.log(arr[i]);
     }
-    // Pattern upon inserting todo in DOM
-    function prependTodo(val) {
-        $(".todos-todo").prepend(
-            "<div class='todo'><input type='checkbox'>" +
-            "<label>" + val + "</label>" + 
-            "<i class='fas fa-edit'></i>" + 
-            "<i class='fas fa-trash-alt'></i></div>");
-        $(".todos-container label").addClass("todo-text");
-        $(".fa-edit").addClass("todo-edit");
-        $(".fa-trash-alt").addClass("todo-delete");
-    }
+}
+// Pattern upon inserting todo in DOM
+function prependTodo(val) {
+    $(".todos-todo").prepend(
+        "<div class='todo'><input type='checkbox'>" +
+        "<label>" + val + "</label>" + 
+        "<i class='fas fa-edit'></i>" + 
+        "<i class='fas fa-trash-alt'></i></div>");
+    $(".todos-container label").addClass("todo-text");
+    $(".fa-edit").addClass("todo-edit");
+    $(".fa-trash-alt").addClass("todo-delete");
 }
 
 function renameTodo() {
