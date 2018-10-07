@@ -46,9 +46,9 @@ function listActions() {
     addList(defaultTodolist, "far fa-bookmark");
     // Set default todolist data
     $(".todolist-name").val(currentList.listName);
-    defaultTodolist.todos.unshift("lol");
-    defaultTodolist.todos.unshift("mdr");
-    defaultTodolist.todos.unshift("yo");
+    defaultTodolist.todos.unshift("Faire les courses");
+    defaultTodolist.todos.unshift("S'inscrire à la salle de sport");
+    defaultTodolist.todos.unshift("Appeller Francis");
     // When AddBtn is clicked add a new todolist 
     $(".todolistsAdd-container").on("click", function() {
         insertDialog();
@@ -66,6 +66,7 @@ function listActions() {
                 removeDialog();
                 newList();
                 $(".todo").remove();
+                removeDoneTitle();
                 $(".todolist-name").val(currentList.listName);
             }
         });
@@ -193,15 +194,30 @@ function listActions() {
         }
     });
     $(".todolists").on("click", ".todolist", function() {
-        switchList();
+        switchList(this);
     });
+    // Rename a list
     renameList();
-
 }
 
-function switchList() {
-    $(".todo").remove();
+function switchList(sel) {
+    $(".todolist").each(function(){
+        if ($(this).hasClass("current")) {
+            $(this).removeClass("current");
+        }
+    });
+    // Set selected list to current list
+    currentList = allTodolists[$(sel).index()];
+    $(sel).addClass("current");
     $(".todolist-name").val(currentList.listName);
+    // Remove all todos
+    $(".todo").remove();
+    // Add selected list todos
+    addTodo(currentList);
+    addTodoDone(currentList);
+    // Put Done todos title in place
+    $("h2").prependTo($(".todos-done"));
+    removeDoneTitle();
 }
 
 function addList(obj, icon) {
@@ -251,7 +267,8 @@ function renameList() {
 
 // *** Actions for Todos *** //
 function todoActions() {
-    addTodo(defaultTodolist.todos);
+    // Add Default todos on start
+    addTodo(defaultTodolist);
     //Get user todo input and store it in todos array
     $(".todos-input").on("keypress", function(e) {
         if (e.which === 13) {
@@ -260,7 +277,7 @@ function todoActions() {
             //Store todo and creates DOM element if not empty
             while ($(this).val() !== "") {
                 currentList.todos.unshift($(this).val());
-                prependTodo($(this).val());
+                prependTodo($(this).val(), "todo");
                 $(this).val("");
             }
         }
@@ -298,16 +315,24 @@ function sortTodo() {
     });
 }
 
-function addTodo(arr) {
-    // Set up default todos on load
-    for (i = arr.length - 1; i >= 0; i--) {
-        prependTodo(arr[i]);
-        console.log(arr[i]);
+function addTodo(obj) {
+    for (i = obj.todos.length - 1; i >= 0; i--) {
+        prependTodo(obj.todos[i], "todo");
+        console.log(obj.todos[i]);
+    }
+}
+function addTodoDone(obj) {
+    for (i = obj.todosDone.length - 1; i >= 0; i--) {
+        prependTodo(obj.todosDone[i], "done");
+        // Add style properties & check boxes
+        $(".todos-done .todo-text").addClass("done");
+        $(".todos-done input[type=checkbox]").prop("checked", true);
+        console.log(obj.todosDone[i]);
     }
 }
 // Pattern upon inserting todo in DOM
-function prependTodo(val) {
-    $(".todos-todo").prepend(
+function prependTodo(val, state) {
+    $(".todos-" + state).prepend(
         "<div class='todo'><input type='checkbox'>" +
         "<label>" + val + "</label>" + 
         "<i class='fas fa-edit'></i>" + 
@@ -424,5 +449,7 @@ function doneTodo() {
 function removeDoneTitle() {
     if ($(".todos-done").find(".todo").length === 0) {
         $("h2").addClass("hide");
+    } else {
+        $("h2").removeClass("hide");
     }
 }
