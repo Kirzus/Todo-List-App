@@ -1,6 +1,6 @@
 // GLOBAL DATA
 // Set a Default Todolist
-var defaultTodolist = new Todolist("Todolist");
+var defaultTodolist = new Todolist("Things to do");
 var allTodolists = [];
 var currentList = defaultTodolist;
 // Todolist object structure
@@ -51,19 +51,21 @@ function listActions() {
     defaultTodolist.todos.unshift("Appeller Francis");
     // When AddBtn is clicked add a new todolist 
     $(".todolistsAdd-container").on("click", function() {
+        var isSaved = false;
         insertDialog();
         dialogEvents();
         // Saves data & Removes on pressing enter
         $(".dialog").on("keyup", function (e) {
-                if (e.which === 13) {
-                    $("#dialog-save").click();
-                }
+            if (e.which === 13 && isSaved !== true) {
+                $("#dialog-save").click();
+            }
         });
         // Saves data & Removes on clicking save btn
         $("#dialog-save").on("click", function() {
             var iconIsSelected = $(".dialog-header").children().hasClass("icon-selected");
             if ($("#dialog-name").val() !== "" && iconIsSelected === true) {
-                removeDialog();
+                isSaved = true;
+                removeDialog(500);
                 newList();
                 $(".todo").remove();
                 removeDoneTitle();
@@ -168,15 +170,6 @@ function listActions() {
                 }
             }
         }
-        // Delete Dom elements & animate    
-        function removeDialog() {
-            $(".dialog").slideUp(500, function() {
-                $(this).remove();
-            });
-            $(".dialog-container").fadeOut(500, function() {
-                $(this).remove();
-            });              
-        }
         function newList() {
             var selectedName = $(".dialog-main input").val();
             var selectedIcon = $(".icon-selected i").attr("class");
@@ -198,6 +191,17 @@ function listActions() {
     });
     // Rename a list
     renameList();
+    deleteList();
+}
+
+// Delete Dom elements & animate    
+function removeDialog(val) {
+    $(".dialog").slideUp(val, function() {
+        $(this).remove();
+    });
+    $(".dialog-container").fadeOut(val, function() {
+        $(this).remove();
+    });              
 }
 
 function switchList(sel) {
@@ -237,6 +241,51 @@ function addList(obj, icon) {
         "<i class='" + obj.icon + "'></i>" +
         "<p>" + obj.listName + "</p>" +
         "</div>");
+}
+
+function deleteList() {
+    $(".todolist-delete").on("click", function() {
+        $(".main-container").prepend(
+            "<div class='dialog-container'>" +
+                "<div class='dialog'>" +
+                    "<div class='dialog-header'>" +
+                        "<p>Are you sure you wanna delete this list ?</p>" +
+                    "</div>" +
+                    "<div class='dialog-main'>" +
+                        "<button id='cancelBtn'>Cancel</button>" +
+                        "<button id='deleteListBtn'>Yes</button>" +
+                    "</div>" +
+                "</div>" +
+            "</div>"
+        );
+        $(".dialog").hide().slideDown(500);
+        $("#deleteListBtn").on("click", function() {
+            var nextIndex = allTodolists.indexOf(currentList) - 1;
+            $(".dialog-container").remove();
+            $(".todolist")[allTodolists.indexOf(currentList)].remove();
+            allTodolists.splice(allTodolists.indexOf(currentList), 1);
+            if (allTodolists.length !== 0) {
+                if (nextIndex === -1) {
+                    currentList = allTodolists[0];
+                    switchList($(".todolist")[0]);
+                } else {
+                    currentList = allTodolists[nextIndex];
+                    switchList($(".todolist")[nextIndex]);
+                }
+            } else {
+                // Add an empty list
+                currentList = new Todolist("Todolist");
+                $(".todo").remove();
+                // Add todolist of defaultTodolist on load
+                addList(currentList, "far fa-bookmark");
+                // Set default todolist data
+                $(".todolist-name").val(currentList.listName);
+            }
+        });
+        $("#cancelBtn").on("click", function() {
+            removeDialog(500);
+        });
+    });
 }
 
 function renameList() {
