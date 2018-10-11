@@ -37,7 +37,9 @@
                 <!-- Todolist Header  -->
                 <div class="todolist-name-container">
                     <!-- Icon -->
-                    <i class="far fa-bookmark"></i>
+                    <div class="todolist-icon">
+                        <i class="far fa-bookmark"></i>
+                    </div>
                     <!-- Name -->
                     <input type="text" class="todolist-name" disabled="disabled">
                     <!-- Todolist settings -->
@@ -49,6 +51,11 @@
                             <p class="todolist-delete">Delete todolist</p>
                         </div>
                     </div>
+                </div>
+                <div class='dialog-icons hide'> 
+                    <input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>
+                    <ul class='icons-grid'></ul> 
+                    <button class='icons-loadBtn'>Load more icons</button>
                 </div>
                 <!-- Todos Input -->
                 <input type="text" class="todos-input" placeholder="Add a new todo">

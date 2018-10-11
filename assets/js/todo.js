@@ -55,9 +55,11 @@ function listActions() {
         insertDialog();
         dialogEvents();
         // Saves data & Removes on pressing enter
-        $(".dialog").on("keyup", function (e) {
+        $(window).on("keyup", function (e) {
             if (e.which === 13 && isSaved !== true) {
                 $("#dialog-save").click();
+            } else if (e.which === 27) {
+                $("#dialog-cancel").click();
             }
         });
         // Saves data & Removes on clicking save btn
@@ -72,6 +74,10 @@ function listActions() {
                 $(".todolist-name").val(currentList.listName);
             }
         });
+        // Removes dialog on click cancel button
+        $("#dialog-cancel").on("click", function() {
+            removeDialog(500);
+        })
         // Prepend dialog & animate
         function insertDialog() {
             $(".main-container").prepend(
@@ -89,6 +95,7 @@ function listActions() {
                                         "<button class='icons-loadBtn'>Load more icons</button>" +
                                     "</div>" +
                             "</div>" +
+                            "<button id='dialog-cancel'>Cancel</button>" +
                             "<button id='dialog-save'>Save</button>" +
                         "</div>" +
                     "</div>"
@@ -180,14 +187,34 @@ function listActions() {
     $(".todolist-settings").on("click", function() {
         $(".todolist-settings-content").toggleClass("hide");
     });
+    $(".todolist-change-icon").on("click", function() {
+        $(".dialog-icons").removeClass("hide");
+        // $(".todolist-container").prepend(
+        //     "<div class='dialog-icons'>" +
+        //     "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
+        //     "<ul class='icons-grid'></ul>" +
+        //     "<button class='icons-loadBtn'>Load more icons</button>" +
+        // "</div>"
+        // );
+        $(".dialog-icons").css("position", "absolute");
+        $(".icons-grid").css("height", "100px");
+    });
     //Hide dropdown list settings content when user click outside of it
     $(window).click(function(e) {
         if (!e.target.matches(".todolist-settings")) {
             $(".todolist-settings-content").addClass("hide");
         }
     });
+    $(window).click(function(e) {
+        if (!e.target.matches(".dialog-icons")) {
+            $(".dialog-icons").toggleClass("hide");
+            console.log("lol");
+        }
+    });
     $(".todolists").on("click", ".todolist", function() {
-        switchList(this);
+        if (!$(this).hasClass("current")) {
+            switchList(this);
+        }
     });
     // Rename a list
     renameList();
@@ -245,6 +272,8 @@ function addList(obj, icon) {
 
 function deleteList() {
     $(".todolist-delete").on("click", function() {
+        var isDeleted = false;
+        // Insert Dialog
         $(".main-container").prepend(
             "<div class='dialog-container'>" +
                 "<div class='dialog'>" +
@@ -258,8 +287,10 @@ function deleteList() {
                 "</div>" +
             "</div>"
         );
+        // Dialog opening anim 
         $(".dialog").hide().slideDown(500);
         $("#deleteListBtn").on("click", function() {
+            isDeleted = true;
             var nextIndex = allTodolists.indexOf(currentList) - 1;
             $(".dialog-container").remove();
             $(".todolist")[allTodolists.indexOf(currentList)].remove();
@@ -280,9 +311,21 @@ function deleteList() {
                 addList(currentList, "far fa-bookmark");
                 // Set default todolist data
                 $(".todolist-name").val(currentList.listName);
+                removeDoneTitle();
+            }
+        });
+        $(window).on("keyup", function (e) {
+            // Triggers delete on pressing Enter
+            if (e.which === 13 && isDeleted !== true) {
+                $("#deleteListBtn").click();
+            }
+            // Triggers cancel on presing Escape
+            else if (e.which === 27) {
+                $("#cancelBtn").click();
             }
         });
         $("#cancelBtn").on("click", function() {
+            // Dialog closing
             removeDialog(500);
         });
     });

@@ -72,8 +72,12 @@ main {
     border: 1px solid;
 }
 
+.todolist-name-container {
+    display: flex;
+}
+
 .todolist-name {
-    width: 90%;
+    width: 100%;
 }
 
 .todos-input {
