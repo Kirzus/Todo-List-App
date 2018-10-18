@@ -188,14 +188,13 @@ function listActions() {
         $(".todolist-settings-content").toggleClass("hide");
     });
     $(".todolist-change-icon").on("click", function() {
-        $(".dialog-icons").removeClass("hide");
-        // $(".todolist-container").prepend(
-        //     "<div class='dialog-icons'>" +
-        //     "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
-        //     "<ul class='icons-grid'></ul>" +
-        //     "<button class='icons-loadBtn'>Load more icons</button>" +
-        // "</div>"
-        // );
+        $(".todolist-container").prepend(
+            "<div class='dialog-icons'>" +
+            "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
+            "<ul class='icons-grid'></ul>" +
+            "<button class='icons-loadBtn'>Load more icons</button>" +
+        "</div>"
+        );
         $(".dialog-icons").css("position", "absolute");
         $(".icons-grid").css("height", "100px");
     });
