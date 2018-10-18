@@ -35,7 +35,6 @@ for (i = 0; i < allIconsSolid.length; i++) {
 for (i = 0; i < allIconsBrand.length; i++) {
     allIcons.push(new IconBrand(allIconsBrand[i]));
 }
-
 // Run core features functions
 listActions();
 todoActions();
@@ -46,14 +45,23 @@ function listActions() {
     addList(defaultTodolist, "far fa-bookmark");
     // Set default todolist data
     $(".todolist-name").val(currentList.listName);
-    defaultTodolist.todos.unshift("Faire les courses");
-    defaultTodolist.todos.unshift("S'inscrire à la salle de sport");
-    defaultTodolist.todos.unshift("Appeller Francis");
+    defaultTodolist.todos.unshift("Do groceries");
+    defaultTodolist.todos.unshift("Sign up for a gym membership");
+    defaultTodolist.todos.unshift("Call Aunt Lisa");
     // When AddBtn is clicked add a new todolist 
     $(".todolistsAdd-container").on("click", function() {
         var isSaved = false;
         insertDialog();
-        dialogEvents();
+        iconSearch(64);
+        // Display usert text input in header
+        $("#dialog-name").on("keyup", function() {
+            var inputValue = $(this).val();
+            $(".dialog-header p").text(inputValue);
+            if (inputValue === "") {
+                $(".dialog-header p").text("Create a new list");
+            }
+        });
+        displayIconSelected();
         // Saves data & Removes on pressing enter
         $(window).on("keyup", function (e) {
             if (e.which === 13 && isSaved !== true) {
@@ -62,7 +70,7 @@ function listActions() {
                 $("#dialog-cancel").click();
             }
         });
-        // Saves data & Removes on clicking save btn
+        // Saves data & Removes Dialog on clicking save btn
         $("#dialog-save").on("click", function() {
             var iconIsSelected = $(".dialog-header").children().hasClass("icon-selected");
             if ($("#dialog-name").val() !== "" && iconIsSelected === true) {
@@ -103,80 +111,6 @@ function listActions() {
             // $(".dialog-container").hide().fadeIn(1000);
             $(".dialog").hide().slideDown(500);
         }
-        // Events related to dialog box
-        function dialogEvents() {
-            nameEvents();
-            iconEvents();
-            function nameEvents() {
-                $("#dialog-name").on("keyup", function() {
-                    var inputValue = $(this).val();
-                    $(".dialog-header p").text(inputValue);
-                    if (inputValue === "") {
-                        $(".dialog-header p").text("Create a new list");
-                    }
-                });
-            }
-            function iconEvents() {
-                var maxIconsLoad = 64;
-                // Add the first 32 icons to dom
-                for (i = 0; i < maxIconsLoad; i++) {
-                    appendIcons();
-                }
-                // Load more icons
-                $(".icons-loadBtn").on("click", function() {
-                    if ($(".icons-search").val() === "") {
-                        // Get current length of icons on display
-                        var iconsLength = $(".icons-grid .icon-awesome").length;
-                        for (i = iconsLength + 1; i < (iconsLength + maxIconsLoad) + 1; i++) {
-                            appendIcons();
-                        }
-                    }      
-                });
-                // Icons Search Logic
-                $(".icons-search").on("keyup", function() {
-                    var value = $(this).val();
-                    var exp = new RegExp(value);
-                    // RESET:
-                    $(".icon-awesome").each(function() {
-                        // Remove icons each time a key is pressed
-                        $(this).remove();
-                    });
-                    if (value !== "") {
-                        for (i = 0; i < allIcons.length; i++) {
-                            var matchArr = exp.test(allIcons[i].name);
-                            if (matchArr === true) {
-                                appendIcons();
-                            }
-                        }
-                    } else {
-                        // When no search : only loads the set max amount on load
-                        for (i = 0; i < maxIconsLoad; i++) {
-                            appendIcons();
-                        }
-                    }
-                });
-                // Display icon clicked on in header
-                $(".icons-grid").on("click", ".icon-awesome", function() {
-                    var iconHtml = $(this).html();
-                    if ($(".dialog-header").children().hasClass("icon-selected") !== true) {
-                        $(".dialog-header").prepend("<div class='icon-selected'>" + iconHtml + "</div>");
-                    } else if ($(".icon-selected").html() === iconHtml) {
-                        // Does nothing  
-                    } else {
-                        $(".icon-selected").remove();
-                        $(".dialog-header").prepend("<div class='icon-selected'>" + iconHtml + "</div>");
-                    }
-                });
-                // Insert icons in DOM Dialog
-                function appendIcons() {
-                    $(".icons-grid").append(
-                        "<li class='icon-awesome'>" +
-                        "<i class='" +
-                        allIcons[i].imgClass + "'></i>" +
-                        "</li>");
-                }
-            }
-        }
         function newList() {
             var selectedName = $(".dialog-main input").val();
             var selectedIcon = $(".icon-selected i").attr("class");
@@ -187,27 +121,58 @@ function listActions() {
     $(".todolist-settings").on("click", function() {
         $(".todolist-settings-content").toggleClass("hide");
     });
+    // Open Icons Choosing Dialog 
     $(".todolist-change-icon").on("click", function() {
-        $(".todolist-container").prepend(
-            "<div class='dialog-icons'>" +
-            "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
-            "<ul class='icons-grid'></ul>" +
-            "<button class='icons-loadBtn'>Load more icons</button>" +
-        "</div>"
-        );
-        $(".dialog-icons").css("position", "absolute");
-        $(".icons-grid").css("height", "100px");
+        var isSaved = false;
+        insertDialog();
+        displayIconSelected();
+        // Saves data & Removes on pressing enter
+        $(window).on("keyup", function (e) {
+            if (e.which === 13 && isSaved !== true) {
+               $("#dialog-save").click();
+            } else if (e.which === 27) {
+               $("#dialog-cancel").click();
+            }
+        });
+        // Removes dialog on click cancel button
+        $("#dialog-cancel").on("click", function() {
+            removeDialog(500);
+        })
+        $("#dialog-save").on("click", function() {
+            var iconIsSelected = $(".dialog-header").children().hasClass("icon-selected");
+            if (iconIsSelected === true) {
+                isSaved = true;
+                removeDialog(500);
+                $(".todolist-icon").prepend("<i class='" + $(".icon-selected i").attr("class") + "'></i>");
+            }
+        });
+        iconSearch(128);
+        function insertDialog() {
+            $(".main-container").prepend(
+                "<div class='dialog-container'>" +
+                    "<div class='dialog'>" +
+                        "<div class='dialog-header'>" +
+                            "<p>" + currentList.listName + "</p>" +
+                        "</div>" +
+                        "<div class='dialog-icons'>" +
+                            "<label for='allIconsDialog'>Choose an icon</label><br>" +
+                            "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
+                            "<ul class='icons-grid'></ul>" +
+                            "<button class='icons-loadBtn'>Load more icons</button>" +
+                        "</div>" +
+                        "<button id='dialog-cancel'>Cancel</button>" +
+                        "<button id='dialog-save'>Save</button>" +
+                    "</div>" +
+                "</div>"
+            );
+            // $(".dialog-container").hide().fadeIn(1000);
+            $(".dialog").hide().slideDown(500);
+        }
     });
     //Hide dropdown list settings content when user click outside of it
     $(window).click(function(e) {
         if (!e.target.matches(".todolist-settings")) {
             $(".todolist-settings-content").addClass("hide");
-        }
-    });
-    $(window).click(function(e) {
-        if (!e.target.matches(".dialog-icons")) {
-            $(".dialog-icons").toggleClass("hide");
-            console.log("lol");
         }
     });
     $(".todolists").on("click", ".todolist", function() {
@@ -220,6 +185,69 @@ function listActions() {
     deleteList();
 }
 
+function displayIconSelected() {
+    // Display icon clicked on in header
+    $(".icons-grid").on("click", ".icon-awesome", function() {
+        var iconHtml = $(this).html();
+        if ($(".dialog-header").children().hasClass("icon-selected") !== true) {
+            $(".dialog-header").prepend("<div class='icon-selected'>" + iconHtml + "</div>");
+        } else if ($(".icon-selected").html() === iconHtml) {
+            // Does nothing  
+        } else {
+            $(".icon-selected").remove();
+            $(".dialog-header").prepend("<div class='icon-selected'>" + iconHtml + "</div>");
+        }
+    });
+}
+// Icon search feature 
+function iconSearch(maxIcons) {
+    var maxIconsLoad = maxIcons;
+    // Add the first 32 icons to dom
+    for (i = 0; i < maxIconsLoad; i++) {
+        appendIcons();
+    }
+    // Load more icons
+    $(".icons-loadBtn").on("click", function() {
+        if ($(".icons-search").val() === "") {
+            // Get current length of icons on display
+            var iconsLength = $(".icons-grid .icon-awesome").length;
+            for (i = iconsLength + 1; i < (iconsLength + maxIconsLoad) + 1; i++) {
+                appendIcons();
+            }
+        }      
+    });
+    // Icons Search Logic
+    $(".icons-search").on("keyup", function() {
+        var value = $(this).val();
+        var exp = new RegExp(value);
+        // RESET:
+        $(".icon-awesome").each(function() {
+            // Remove icons each time a key is pressed
+            $(this).remove();
+        });
+        if (value !== "") {
+            for (i = 0; i < allIcons.length; i++) {
+                var matchArr = exp.test(allIcons[i].name);
+                if (matchArr === true) {
+                    appendIcons();
+                }
+            }
+        } else {
+            // When no search : only loads the set max amount on load
+            for (i = 0; i < maxIconsLoad; i++) {
+                appendIcons();
+            }
+        }
+    });
+    // Insert icons in DOM Dialog
+    function appendIcons() {
+        $(".icons-grid").append(
+            "<li class='icon-awesome'>" +
+            "<i class='" +
+            allIcons[i].imgClass + "'></i>" +
+            "</li>");
+    }
+}
 // Delete Dom elements & animate    
 function removeDialog(val) {
     $(".dialog").slideUp(val, function() {
@@ -229,7 +257,6 @@ function removeDialog(val) {
         $(this).remove();
     });              
 }
-
 function switchList(sel) {
     $(".todolist").each(function(){
         if ($(this).hasClass("current")) {
@@ -249,7 +276,6 @@ function switchList(sel) {
     $("h2").prependTo($(".todos-done"));
     removeDoneTitle();
 }
-
 function addList(obj, icon) {
     // Store new todolist object in todolists array
     allTodolists.push(obj);
@@ -268,7 +294,6 @@ function addList(obj, icon) {
         "<p>" + obj.listName + "</p>" +
         "</div>");
 }
-
 function deleteList() {
     $(".todolist-delete").on("click", function() {
         var isDeleted = false;
@@ -329,7 +354,6 @@ function deleteList() {
         });
     });
 }
-
 function renameList() {
     // Enable todolist input and focus on it
     $(".todolist-rename").on("click", function() {
@@ -405,7 +429,6 @@ function sortTodo() {
         }
     });
 }
-
 function addTodo(obj) {
     for (i = obj.todos.length - 1; i >= 0; i--) {
         prependTodo(obj.todos[i], "todo");
@@ -432,7 +455,6 @@ function prependTodo(val, state) {
     $(".fa-edit").addClass("todo-edit");
     $(".fa-trash-alt").addClass("todo-delete");
 }
-
 function renameTodo() {
     var inputHtml = "<input type='text' class='todo-text'>";
     //Change DOM elem to input tag on clicking edit btn
@@ -480,7 +502,6 @@ function renameTodo() {
         }
     });
 }
-
 function removeTodo() {
     $(".todos-container").on("click", ".todo-delete", function() {
         //Select and store the current todo 
@@ -502,7 +523,6 @@ function removeTodo() {
         console.log(currentList.todos);
     });
 }
-
 function doneTodo() {
     $(".todos-container").on("click", "input[type=checkbox]", function() {
         //Store todo text only
@@ -536,7 +556,6 @@ function doneTodo() {
         }
     });
 }
-
 function removeDoneTitle() {
     if ($(".todos-done").find(".todo").length === 0) {
         $("h2").addClass("hide");
