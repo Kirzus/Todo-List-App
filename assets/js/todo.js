@@ -143,8 +143,10 @@ function listActions() {
             if (iconIsSelected === true) {
                 isSaved = true;
                 $(".todolist-icon").children().remove();
+                $(".todolist.current i").remove();
                 currentList.icon = $(".icon-selected").children().attr("class");
                 $(".todolist-icon").prepend("<i class='" + currentList.icon + "'></i>");
+                $(".todolist.current").prepend("<i class='" + currentList.icon + "'></i>");
                 removeDialog(500);
             }
         });
