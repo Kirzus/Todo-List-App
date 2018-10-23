@@ -85,6 +85,7 @@ input[type="text"]:focus {
 
 .todolist-name-container {
     display: flex;
+    padding: 1em 1em;
 }
 
 .todolist-name {
@@ -128,9 +129,11 @@ input[type="text"]:focus {
 
 .todo:hover {
     /* border: 1px solid; */
-    border: 2px solid;
+    padding: 2px 0px 2px 10px; 
+    border: 1px solid;
     border-left: none;
     border-right: none;
+    background: rgb(240, 240, 240);
 }
 
 .todo > input {
@@ -139,8 +142,18 @@ input[type="text"]:focus {
 
 .todo > label,
 .todo > i {
-    margin: 0 5px;
+    margin: 0px;
     align-self: center;
+}
+.todo > i {
+    padding: 9px 10px;
+}
+
+.todo-edit {
+    background: green;
+}
+.todo-delete {
+    background: rgb(203, 0, 0);
 }
 
 .general-settings {
