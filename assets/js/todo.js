@@ -108,7 +108,7 @@ function listActions() {
                         "</div>" +
                     "</div>"
             );
-            // $(".dialog-container").hide().fadeIn(1000);
+            $(".dialog-container").hide().fadeIn(500);
             $(".dialog").hide().slideDown(500);
         }
         function newList() {
@@ -169,7 +169,7 @@ function listActions() {
                     "</div>" +
                 "</div>"
             );
-            // $(".dialog-container").hide().fadeIn(1000);
+            $(".dialog-container").hide().fadeIn(500);
             $(".dialog").hide().slideDown(500);
         }
     });
@@ -320,6 +320,7 @@ function deleteList() {
             "</div>"
         );
         // Dialog opening anim 
+        $(".dialog-container").hide().fadeIn(500);
         $(".dialog").hide().slideDown(500);
         $("#deleteListBtn").on("click", function() {
             isDeleted = true;
@@ -457,11 +458,11 @@ function prependTodo(val, state) {
     $(".todos-" + state).prepend(
         "<div class='todo'><input type='checkbox'>" +
         "<label>" + val + "</label>" + 
-        "<i class='fas fa-edit'></i>" + 
-        "<i class='fas fa-trash-alt'></i></div>");
+        "<button class='todo-edit'><i class='fas fa-edit'></i>" + 
+        "<button class='todo-delete'><i class='fas fa-trash-alt'></i></div>");
     $(".todos-container label").addClass("todo-text");
-    $(".fa-edit").addClass("todo-edit");
-    $(".fa-trash-alt").addClass("todo-delete");
+    // $(".fa-edit").addClass("todo-edit");
+    // $(".fa-trash-alt").addClass("todo-delete");
 }
 function renameTodo() {
     var inputHtml = "<input type='text' class='todo-text'>";
