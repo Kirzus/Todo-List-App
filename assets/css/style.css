@@ -95,7 +95,7 @@ input[type="text"]:focus {
     display: flex;
     align-items: center;
     height: 3em;
-    border-bottom: 1px solid;
+    /* border-bottom: 1px solid rgb(200, 200, 200); */
     padding-left: 1em;
     padding-right: 1em;
     font-size: 22px;
@@ -184,33 +184,45 @@ input[type="text"]:focus {
 }
 
 .todo > input[type="checkbox"] {
+    cursor: pointer;
     margin-left: 1em;
 }
-
 .todo > label {
     margin: 0px;
     margin-left: 2em;
 }
+.todos-todo .todo > label {
+    cursor: -webkit-grab; 
+}
 .todo-edit {
-    background: rgb(0, 128, 0);
+    background: rgb(0, 200, 0);
+    margin-right: 0px;
+    font-size: 16px;
+    border: none;
     height: 35px;
     width: 35px;
 }
 .todo-delete {
-    background: rgb(203, 0, 0);
+    background: rgb(200, 0, 0);
+    margin-right: 0px;
+    font-size: 16px;
+    border: none;
     height: 35px;
     width: 35px;
 }
 .todo-delete:active,
 .todo-edit:active {
-    transform: scale(0.9);
+    border: none;
+    transform: scale(0.8);
 }
 .todo-edit:hover {
-    background: rgb(0, 160, 0);
+    cursor: pointer;
+    background: rgb(0, 255, 0);
     color: rgb(30, 30, 30);
 }
 .todo-delete:hover {
-    background: rgb(235, 0, 0);
+    cursor: pointer;
+    background: rgb(255, 0, 0);
     color: rgb(30, 30, 30);
 }
 
@@ -218,7 +230,6 @@ input[type="text"]:focus {
     grid-column: 3;
     justify-self: end;
 }
-
 
 .hide {
     display: none;

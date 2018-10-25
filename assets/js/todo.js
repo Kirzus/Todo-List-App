@@ -281,6 +281,7 @@ function switchList(sel) {
     // Put Done todos title in place
     $("h2").prependTo($(".todos-done"));
     removeDoneTitle();
+    hoverTodo();
 }
 function addList(obj, icon) {
     // Store new todolist object in todolists array
@@ -403,21 +404,37 @@ function todoActions() {
                 currentList.todos.unshift($(this).val());
                 prependTodo($(this).val(), "todo");
                 $(this).val("");
-            }
+            } 
+            hoverTodo();
         }
     });
+    hoverTodo();
     sortTodo()
     doneTodo();
     renameTodo();
     removeTodo();
 } 
 
+function hoverTodo() {
+    $(".todo-edit").hide();
+    $(".todo-delete").hide();
+    $(".todos-todo, .todos-done").children(".todo").hover(
+        function() {
+            $(this).children(".todo-edit").show();
+            $(this).children(".todo-delete").show();
+        }, function() {
+            $(this).children(".todo-edit").hide();
+            $(this).children(".todo-delete").hide();
+        }
+    );
+}
+
 function sortTodo() {
     $(".todos-todo")
     .sortable({
         items: ".todo",
         // Keep the mouse vertically in the middle of the todo div 
-        cursor: "move",
+        cursor: "grabbing",
         cursorAt: {
             top: $(".todo").height() / 2
         },
@@ -527,7 +544,9 @@ function removeTodo() {
             console.log(currentList.todosDone);
         // }
         }
-        todo.remove();
+        $(todo).fadeOut(250, function() {
+            $(this).remove();
+        });        
         removeDoneTitle();
         console.log(currentList.todos);
     });
@@ -539,6 +558,7 @@ function doneTodo() {
         var lastTodo = $(".todos-todo").children().last();
         var todo = $(this).parent();
         if ($(this).prop("checked") !== false) {
+            todo.hide().slideDown(500);
             // Delete data from todos array and store it in todosDone
             currentList.todosDone.unshift(todoTxt.text());
             currentList.todos.splice(todo.index(), 1);         
