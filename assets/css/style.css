@@ -84,6 +84,36 @@ input[type="text"]:focus {
     padding: 0;
 }
 
+.todolistsAdd-container {
+    display: flex;
+    align-items: center;
+    margin-top: 62px;
+    margin-bottom: 1em;
+}
+.todolistsAdd-container i {
+    margin-right: 10%;
+    font-size: 2em;
+    color: rgb(205, 0, 0);
+}
+.todolists {
+    display: flex;
+    flex-direction: column;
+}
+
+.todolist {
+    display: flex;    
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.todolist i {
+    margin-right: 1em;
+    font-size: 2em;
+}
+
+.todolist p {
+}
+
 .todolist-container {
     width: 100%;
     grid-column: 2;
