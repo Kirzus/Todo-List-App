@@ -48,74 +48,79 @@ function listActions() {
     defaultTodolist.todos.unshift("Do groceries");
     defaultTodolist.todos.unshift("Sign up for a gym membership");
     defaultTodolist.todos.unshift("Call Aunt Lisa");
+    var addClicked = false; // Add button external checker
     // When AddBtn is clicked add a new todolist 
     $(".todolistsAdd-container").on("click", function() {
-        var isSaved = false;
-        insertDialog();
-        iconSearch(64);
-        // Display usert text input in header
-        $("#dialog-name").on("keyup", function() {
-            var inputValue = $(this).val();
-            $(".dialog-header p").text(inputValue);
-            if (inputValue === "") {
-                $(".dialog-header p").text("Create a new list");
-            }
-        });
-        displayIconSelected();
-        // Saves data & Removes on pressing enter
-        $(window).on("keyup", function (e) {
-            if (e.which === 13 && isSaved !== true) {
-                $("#dialog-save").click();
-            } else if (e.which === 27) {
-                $("#dialog-cancel").click();
-            }
-        });
-        // Saves data & Removes Dialog on clicking save btn
-        $("#dialog-save").on("click", function() {
-            var iconIsSelected = $(".dialog-header").children().hasClass("icon-selected");
-            if ($("#dialog-name").val() !== "" && iconIsSelected === true) {
-                isSaved = true;
+        if (addClicked === false) { 
+            var isSaved = false;
+            addClicked = true;
+            insertDialog();
+            iconSearch(64);
+            // Display usert text input in header
+            $("#dialog-name").on("keyup", function() {
+                var inputValue = $(this).val();
+                $(".dialog-header p").text(inputValue);
+                if (inputValue === "") {
+                    $(".dialog-header p").text("Create a new list");
+                }
+            });
+            displayIconSelected();
+            // Saves data & Removes on pressing enter
+            $(window).on("keyup", function (e) {
+                if (e.which === 13 && isSaved !== true) {
+                    $("#dialog-save").click();
+                } else if (e.which === 27) {
+                    $("#dialog-cancel").click();
+                }
+            });
+            // Saves data & Removes Dialog on clicking save btn
+            $("#dialog-save").on("click", function() {
+                var iconIsSelected = $(".dialog-header").children().hasClass("icon-selected");
+                if ($("#dialog-name").val() !== "" && iconIsSelected === true) {
+                    isSaved = true;
+                    removeDialog(500);
+                    newList();
+                    $(".todo").remove();
+                    removeDoneTitle();
+                    $(".todolist-name").val(currentList.listName);
+                    addClicked = false;
+                }
+            });
+            // Removes dialog on click cancel button
+            $("#dialog-cancel").on("click", function() {
                 removeDialog(500);
-                newList();
-                $(".todo").remove();
-                removeDoneTitle();
-                $(".todolist-name").val(currentList.listName);
+            })
+            // Prepend dialog & animate
+            function insertDialog() {
+                $(".main-container").prepend(
+                    "<div class='dialog-container'>" +
+                        "<div class='dialog'>" +
+                            "<div class='dialog-header'>" +
+                                "<p>Create a new list</p>" +
+                                "</div>" +
+                                "<div class='dialog-main'>" +
+                                    "<input id='dialog-name' type='text' placeholder='Name of the list'></input>" +
+                                        "<div class='dialog-icons'>" +
+                                            "<label for='allIconsDialog'>Choose an icon</label><br>" +
+                                            "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
+                                            "<ul class='icons-grid'></ul>" +
+                                            "<button class='icons-loadBtn'>Load more icons</button>" +
+                                        "</div>" +
+                                "</div>" +
+                                "<button id='dialog-cancel'>Cancel</button>" +
+                                "<button id='dialog-save'>Save</button>" +
+                            "</div>" +
+                        "</div>"
+                );
+                $(".dialog-container").hide().fadeIn(500);
+                $(".dialog").hide().slideDown(500);
             }
-        });
-        // Removes dialog on click cancel button
-        $("#dialog-cancel").on("click", function() {
-            removeDialog(500);
-        })
-        // Prepend dialog & animate
-        function insertDialog() {
-            $(".main-container").prepend(
-                "<div class='dialog-container'>" +
-                    "<div class='dialog'>" +
-                        "<div class='dialog-header'>" +
-                            "<p>Create a new list</p>" +
-                            "</div>" +
-                            "<div class='dialog-main'>" +
-                                "<input id='dialog-name' type='text' placeholder='Name of the list'></input>" +
-                                    "<div class='dialog-icons'>" +
-                                        "<label for='allIconsDialog'>Choose an icon</label><br>" +
-                                        "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
-                                        "<ul class='icons-grid'></ul>" +
-                                        "<button class='icons-loadBtn'>Load more icons</button>" +
-                                    "</div>" +
-                            "</div>" +
-                            "<button id='dialog-cancel'>Cancel</button>" +
-                            "<button id='dialog-save'>Save</button>" +
-                        "</div>" +
-                    "</div>"
-            );
-            $(".dialog-container").hide().fadeIn(500);
-            $(".dialog").hide().slideDown(500);
-        }
-        function newList() {
-            var selectedName = $(".dialog-main input").val();
-            var selectedIcon = $(".icon-selected i").attr("class");
-            addList(new Todolist(selectedName), selectedIcon);
-        }
+            function newList() {
+                var selectedName = $(".dialog-main input").val();
+                var selectedIcon = $(".icon-selected i").attr("class");
+                addList(new Todolist(selectedName), selectedIcon);
+            }
+        }//END IF STATE
     });
     //Toggle todolist possible actions on clicking settings btn
     $(".todolist-settings").on("click", function() {
@@ -545,9 +550,9 @@ function removeTodo() {
         // }
         }
         $(todo).fadeOut(250, function() {
-            $(this).remove();
-        });        
-        removeDoneTitle();
+            $(this).remove();        
+            removeDoneTitle();
+        });
         console.log(currentList.todos);
     });
 }
