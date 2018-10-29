@@ -10,7 +10,6 @@ h2 {
 }
 
 .side-menu {
-
 }
 
 header {
@@ -43,7 +42,9 @@ input[type="text"]:focus {
 
 .main-container{
     display: grid;
-    grid-template-columns: 1fr minmax(300px,50%) 1fr;
+    grid-template-columns: 1fr minmax(280px,35%) 1fr;
+    grid-template-areas: 
+    "side main settings";
     width: 95%;
     margin-top: 2em;
 }
@@ -90,11 +91,11 @@ input[type="text"]:focus {
     grid-template-columns: 50px 1fr;
     align-items: center;
     margin-top: 62px;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
 }
 .todolistsAdd-container i {
     justify-self: center;
-    font-size: 2em;
+    font-size: 2.5em;
     color: rgb(205, 0, 0);
     transition-duration: 0.5s;
     transition-property: transform;
@@ -239,7 +240,7 @@ input[type="text"]:focus {
     cursor: -webkit-grab; 
 }
 .todo-edit {
-    background: rgb(0, 200, 0);
+    background: rgb(0, 255, 0);
     margin-right: 0px;
     font-size: 16px;
     border: none;
@@ -247,7 +248,7 @@ input[type="text"]:focus {
     width: 35px;
 }
 .todo-delete {
-    background: rgb(200, 0, 0);
+    background: rgb(255, 0, 0);
     margin-right: 0px;
     font-size: 16px;
     border: none;
@@ -261,12 +262,15 @@ input[type="text"]:focus {
 }
 .todo-edit:hover {
     cursor: pointer;
-    background: rgb(0, 255, 0);
+    font-size: 18px;
+    background: rgba(0, 255, 0, 0.9);
     color: rgb(30, 30, 30);
 }
 .todo-delete:hover {
     cursor: pointer;
-    background: rgb(255, 0, 0);
+    font-size: 18px;
+    font-weight: 900;
+    background: rgba(255, 0, 0, 0.9);
     color: rgb(30, 30, 30);
 }
 
