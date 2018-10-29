@@ -89,6 +89,7 @@ function listActions() {
             // Removes dialog on click cancel button
             $("#dialog-cancel").on("click", function() {
                 removeDialog(500);
+                addClicked = false;
             })
             // Prepend dialog & animate
             function insertDialog() {
