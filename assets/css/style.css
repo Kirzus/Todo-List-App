@@ -48,7 +48,7 @@ input[type="text"]:focus {
 
 .main-container{
     display: grid;
-    grid-template-columns: 1fr minmax(280px,35%) 1fr;
+    grid-template-columns: 1fr minmax(280px,40%) 1fr;
     grid-template-areas: 
     "side main settings";
     width: 95%;
@@ -98,6 +98,7 @@ input[type="text"]:focus {
     align-items: center;
     margin-top: 62px;
     margin-bottom: 2em;
+    margin-left: 25%;
 }
 
 .todolistsAdd-container i {
@@ -123,9 +124,9 @@ input[type="text"]:focus {
     flex-direction: column;
 }
 
-.current i {
-    padding-bottom: 0.2em;
-    border-bottom: 2px solid black;
+.current {
+    padding-left: 0.5em;
+    border-left: 5px solid rgb(205, 0, 0);
 }
 
 .todolist {
@@ -133,11 +134,18 @@ input[type="text"]:focus {
     grid-template-rows: 1fr;
     grid-template-columns: 50px 1fr;
     align-items: center;
+    margin: 0.25em 0 0.25em 0;
 }
 .todolist i {
     font-size: 2em;
     justify-self: center;
 }
+
+.todolist:hover {
+    padding-left: 0.5em;
+    border-left: 5px solid rgb(205, 0, 0, 0.6);
+}
+
 .todolist p {
     margin-left: 1em;
 }
@@ -300,3 +308,10 @@ input[type="text"]:focus {
     text-decoration-line: line-through;
     /* font-style: italic; */
 }
+
+@media only screen and (max-width: 768px) {
+    .todolist p ,
+    .todolistsAdd-container p {
+        display: none;
+    }
+} 
