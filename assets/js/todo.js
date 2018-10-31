@@ -100,7 +100,7 @@ function listActions() {
                                 "<p>Create a new list</p>" +
                                 "</div>" +
                                 "<div class='dialog-main'>" +
-                                    "<input id='dialog-name' type='text' placeholder='Name of the list'></input>" +
+                                    "<input id='dialog-name' type='text' maxlength='30' placeholder='Name of the list'></input>" +
                                         "<div class='dialog-icons'>" +
                                             "<label for='allIconsDialog'>Choose an icon</label><br>" +
                                             "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
