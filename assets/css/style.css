@@ -1,10 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
+
 body {
     margin: 0;
     background: rgb(255, 255, 255);
     color: black;
+    font-family: 'Open Sans Condensed', sans-serif;
 }
-
+input {
+    font-family: 'Open Sans Condensed', sans-serif;
+}
 h2 {
+    font-size: 26px;
     text-align: center;
     font-style: italic;
 }
@@ -22,7 +28,8 @@ header {
 }
 
 .title {
-    font-size: 26px;
+    font-size: 1.6em;
+    margin: 0.4em;
 }
 
 button {
@@ -92,6 +99,7 @@ input[type="text"]:focus {
     margin-top: 62px;
     margin-bottom: 2em;
 }
+
 .todolistsAdd-container i {
     justify-self: center;
     font-size: 2.5em;
@@ -108,10 +116,16 @@ input[type="text"]:focus {
 .todolistsAdd-container p:hover {
     cursor: pointer;
     display: block;
+    text-decoration-line: underline;
 }
 .todolists {
     display: flex;
     flex-direction: column;
+}
+
+.current i {
+    padding-bottom: 0.2em;
+    border-bottom: 2px solid black;
 }
 
 .todolist {
