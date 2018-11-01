@@ -59,9 +59,9 @@ function listActions() {
             // Display usert text input in header
             $("#dialog-name").on("keyup", function() {
                 var inputValue = $(this).val();
-                $(".dialog-header p").text(inputValue);
+                $(".dialog-header h3").text(inputValue);
                 if (inputValue === "") {
-                    $(".dialog-header p").text("Create a new list");
+                    $(".dialog-header h3").text("Create a new list");
                 }
             });
             displayIconSelected();
@@ -97,7 +97,7 @@ function listActions() {
                     "<div class='dialog-container'>" +
                         "<div class='dialog'>" +
                             "<div class='dialog-header'>" +
-                                "<p>Create a new list</p>" +
+                                "<h3>Create a new list</h3>" +
                                 "</div>" +
                                 "<div class='dialog-main'>" +
                                     "<input id='dialog-name' type='text' maxlength='30' placeholder='Name of the list'></input>" +
@@ -162,7 +162,10 @@ function listActions() {
                 "<div class='dialog-container'>" +
                     "<div class='dialog'>" +
                         "<div class='dialog-header'>" +
-                            "<p>" + currentList.listName + "</p>" +
+                            "<div class='icon-selected'>" + 
+                                "<i class='" + currentList.icon + "'></i>" +
+                            "</div>" +
+                            "<h3>" + currentList.listName + "</h3>" +
                         "</div>" +
                         "<div class='dialog-icons'>" +
                             "<label for='allIconsDialog'>Choose an icon</label><br>" +
@@ -285,7 +288,7 @@ function switchList(sel) {
     addTodo(currentList);
     addTodoDone(currentList);
     // Put Done todos title in place
-    $("h2").prependTo($(".todos-done"));
+    $("h3").prependTo($(".todos-done"));
     removeDoneTitle();
     hoverTodo();
 }
@@ -317,7 +320,7 @@ function deleteList() {
             "<div class='dialog-container'>" +
                 "<div class='dialog'>" +
                     "<div class='dialog-header'>" +
-                        "<p>Are you sure you wanna delete this list ?</p>" +
+                        "<h3>Are you sure you wanna delete this list ?</h3>" +
                     "</div>" +
                     "<div class='dialog-main'>" +
                         "<button id='cancelBtn'>Cancel</button>" +
@@ -572,8 +575,8 @@ function doneTodo() {
             console.log(currentList.todosDone);   
             //Add a line through to the text of todo
             todoTxt.addClass("done");
-            $("h2").removeClass("hide");
-            $(this).parent().insertAfter($("h2"));
+            $("h3").removeClass("hide");
+            $(this).parent().insertAfter($("h3"));
         } else {
             var titleIndex = 1;
             currentList.todos.push(todoTxt.text());
@@ -593,8 +596,8 @@ function doneTodo() {
 }
 function removeDoneTitle() {
     if ($(".todos-done").find(".todo").length === 0) {
-        $("h2").addClass("hide");
+        $("h3").addClass("hide");
     } else {
-        $("h2").removeClass("hide");
+        $("h3").removeClass("hide");
     }
 }
