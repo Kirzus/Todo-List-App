@@ -50,7 +50,7 @@ function listActions() {
     defaultTodolist.todos.unshift("Call Aunt Lisa");
     var addClicked = false; // Add button external checker
     // When AddBtn is clicked add a new todolist 
-    $(".todolistsAdd-container").on("click", function() {
+    $(".todolistsAdd-container i").on("click", function() {
         if (addClicked === false) { 
             var isSaved = false;
             addClicked = true;

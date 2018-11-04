@@ -70,6 +70,7 @@ input[type="text"]:focus {
 }
 .dialog-header {
     display: grid;
+    cursor: default;
     grid-template-columns: 50px 1fr 50px;
     align-items: center;
     justify-items: center;
@@ -97,6 +98,7 @@ input[type="text"]:focus {
 .dialog-main {
     padding: 0 1em;
 }
+
 
 .dialog-icons {
     padding: 1em 1em;
@@ -146,7 +148,7 @@ input[type="text"]:focus {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: auto;
-    grid-gap: 1em 1em;
+    grid-gap: 1em 0.5em;
     overflow: auto;
     height: 300px;
     list-style: none;
@@ -154,7 +156,7 @@ input[type="text"]:focus {
 }
 
 .icons-grid li i{
-    font-size: 4em;
+    font-size: 3em;
     transition-duration: 0.2s;
     transition-property: transform;
 }
@@ -166,7 +168,6 @@ input[type="text"]:focus {
 
 .todolistsAdd-container {
     display: grid;   
-    cursor: pointer; 
     grid-template-rows: 1fr;
     grid-template-columns: 50px 1fr;
     align-items: center;
@@ -175,7 +176,12 @@ input[type="text"]:focus {
     margin-left: 25%;
 }
 
+.todolistsAdd-container:hover {
+    text-decoration-line: ;
+}
+
 .todolistsAdd-container i {
+    cursor: pointer;
     justify-self: center;
     font-size: 2.5em;
     color: rgb(205, 0, 0);
@@ -183,8 +189,14 @@ input[type="text"]:focus {
     transition-property: transform;
 }
 .todolistsAdd-container i:hover {
-    transform: scale(1.2);
+    opacity: 0.8;
 }
+
+.todolistsAdd-container i:active {
+    transform: scale(0.8);
+}
+
+
 .todolistsAdd-container p {
     margin-left: 1em;
 }
@@ -298,8 +310,12 @@ input[type="text"]:focus {
     border-top: 1px solid rgb(200, 200, 200);
 }
 
+
 .todos-container input[type="text"]:focus {
-    margin-left: 5px;
+    font-size: 16px;
+    margin-left: 2em;
+    height: 2em;
+    background: inherit;
 }
 
 .todo:first-child {
@@ -387,5 +403,18 @@ input[type="text"]:focus {
     .todolist p ,
     .todolistsAdd-container p {
         display: none;
+    }
+} 
+
+@media only screen and (max-width: 500px) {
+    .dialog {
+        width: 280px;
+    }
+    .icons-grid {
+        height: 200px;
+    }
+
+    .icons-grid li i{
+        font-size: 2em;
     }
 } 
