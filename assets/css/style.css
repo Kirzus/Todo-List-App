@@ -7,7 +7,8 @@ body {
     color: black;
     font-family: 'Open Sans Condensed', sans-serif;
 }
-input {
+input, 
+button {
     font-family: 'Open Sans Condensed', sans-serif;
 }
 h3 {
@@ -96,14 +97,35 @@ input[type="text"]:focus {
 }
 
 .dialog-main {
-    padding: 0 1em;
+    padding: 0 2em;
 }
-
 
 .dialog-icons {
-    padding: 1em 1em;
+    border: 1px solid rgb(200, 200, 200);
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
+.dialog-icons p {
+    padding: 0.5em;
+    margin-top: 0;
+    margin-bottom: 0em;
+    color: white;
+    background-image: linear-gradient(to bottom, rgb(205, 0, 0) 0%, rgb(255, 0, 0) 100%);
+}
+
+.iconsWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.iconsWrapper > i {
+    color: rgb(150, 150, 150);
+    margin-left: 1.5em;
+    margin-right: 0.25em;
+}
 .dialog input,
 .dialog button {
     width: 100%;
@@ -111,14 +133,40 @@ input[type="text"]:focus {
     margin: 0;
 }
 
+.dialog input {
+    padding: 0.25em 0.25em;
+}
+.dialog input:focus {
+    padding: 0.25em 0.25em;
+}
+
+.icons-search {
+    border:none;
+}
 #dialog-name {
-    margin-top: 1em;
+    margin-top: 1.5em;
+}
+
+.icons-loadBtn {
+    height: 2em;
+    border: none;
+    outline: none;
+    border: 1px solid rgba(0,0,0,0.21);
+	border-bottom-color: rgba(0,0,0,0.34);
+    background: rgb(235, 235, 235);
+}
+
+.icons-loadBtn:active {
+    top: 2px;
+	border-color: rgba(0,0,0,0.34) rgba(0,0,0,0.21) rgba(0,0,0,0.21);
+    position: relative;
 }
 
 #dialog-cancel {
     width: 50%;
     height: 3em;
     border: none;
+    background: rgb(235, 235, 235);
 }
 #dialog-save {
     width: 50%;
@@ -152,7 +200,7 @@ input[type="text"]:focus {
     overflow: auto;
     height: 300px;
     list-style: none;
-    padding: 0;
+    padding: 0.5em 0.5em;
 }
 
 .icons-grid li i{

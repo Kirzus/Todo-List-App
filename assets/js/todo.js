@@ -102,8 +102,11 @@ function listActions() {
                                 "<div class='dialog-main'>" +
                                     "<input id='dialog-name' type='text' maxlength='30' placeholder='Name of the list'></input>" +
                                         "<div class='dialog-icons'>" +
-                                            "<label for='allIconsDialog'>Choose an icon</label><br>" +
-                                            "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
+                                            "<p for='allIconsDialog'>Choose an icon</p>" +
+                                            "<div class='iconsWrapper'>" +
+                                                "<i class='fas fa-search'></i>" +
+                                                "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
+                                            "</div>" +
                                             "<ul class='icons-grid'></ul>" +
                                             "<button class='icons-loadBtn'>Load more icons</button>" +
                                         "</div>" +
