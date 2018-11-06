@@ -11,6 +11,13 @@ input,
 button {
     font-family: 'Open Sans Condensed', sans-serif;
 }
+button {
+    cursor: pointer;
+}
+button:hover {
+    opacity: 0.8;
+}
+
 h3 {
     font-size: 20px;
     text-align: center;
@@ -18,6 +25,9 @@ h3 {
 }
 
 .side-menu {
+    display: flex;
+    grid-area: side;
+    flex-direction: column;
 }
 
 header {
@@ -45,7 +55,7 @@ main {
 
 .main-container{
     display: grid;
-    grid-template-columns: 1fr minmax(280px,40%) 1fr;
+    grid-template-columns: 1fr minmax(400px,50%) 1fr;
     grid-template-areas: 
     "side main settings";
     width: 95%;
@@ -232,7 +242,9 @@ main {
     align-items: center;
     margin-top: 62px;
     margin-bottom: 2em;
-    margin-left: 25%;
+    /* margin-left: 25%; */
+    /* margin-right: 10%; */
+    align-self: center;
 }
 
 .todolistsAdd-container:hover {
@@ -296,9 +308,10 @@ main {
 
 .todolist-container {
     width: 100%;
-    grid-column: 2;
+    grid-area: main;
     justify-self: center;
     border: 1px solid rgb(200, 200, 200);
+    margin-left: 1em;
 }
 
 .todolist-container input[type="text"]:focus {
@@ -373,7 +386,6 @@ main {
     overflow: auto;
     border-top: 1px solid rgb(200, 200, 200);
 }
-
 
 .todos-container input[type="text"]:focus {
     font-size: 16px;
@@ -450,7 +462,7 @@ main {
 }
 
 .general-settings {
-    grid-column: 3;
+    grid-area: settings;
     justify-self: end;
 }
 
@@ -464,9 +476,34 @@ main {
 }
 
 @media only screen and (max-width: 768px) {
+    .todolistsAdd-container {
+        margin-top: 68px;
+    }
+
     .todolist p ,
     .todolistsAdd-container p {
         display: none;
+    }
+    .main-container{
+        display: grid;
+        grid-template-columns: 10% minmax(250px,80%) 10%;
+        grid-template-rows: 1fr 15vh;
+        grid-template-areas: 
+        ". main ."
+        ". settings .";
+    }
+    .general-settings {
+        justify-self: center;
+        align-self: center;
+    }
+    .side-menu {
+        display: none;
+    }
+    .todolist-container {
+        margin: 0;
+    }
+    .todos-container {
+        height: 50vh;
     }
 } 
 
@@ -475,10 +512,15 @@ main {
         width: 280px;
     }
     .icons-grid {
-        height: 200px;
+        height: 180px;
     }
-
     .icons-grid li i{
         font-size: 2em;
+    }
+    .current {
+        padding-left: 0em;
+    }
+    .todolist:hover {
+        padding-left: 0em;
     }
 } 

@@ -106,8 +106,7 @@ function listActions() {
                         }
                         if ($(".dialog-icons").children().hasClass("input-alert") !== true) {
                             // $(".dialog-icons").append("<p class='input-alert alert-2'>required field <span>*</span></p>");
-                            $(".allIcons-header").fadeOut(250).fadeIn(250).fadeOut(250).fadeIn(250);
-                            $(".alert-2").insertBefore(".iconsWrapper");
+                            // $(".alert-2").insertBefore(".iconsWrapper");
                         }
                     }
                 }
