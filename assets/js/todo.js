@@ -88,11 +88,15 @@ function listActions() {
                 } else {
                     if (iconIsSelected === false && $("#dialog-name").val() !== "") {
                         $(".input-alert").remove();
+                        $("#allIconsDialog").focus()
                         if ($(".dialog-icons").children().hasClass("input-alert") !== true) {
-                            $(".dialog-icons").prepend("<p class='input-alert'>required field <span>*</span></p>");
+                            // $(".dialog-icons").append("<p class='input-alert alert-2'>required field <span>*</span></p>");
+                            // $(".alert-2").insertBefore(".iconsWrapper");
+                            $(".allIcons-header").fadeOut(250).fadeIn(250).fadeOut(250).fadeIn(250);
                         }
                     } else if ($("#dialog-name").val() === "" && iconIsSelected === true) {
                         $(".input-alert").remove();
+                        $("#dialog-name").focus();
                         if ($(".dialog-main").children().hasClass("input-alert") !== true) {
                             $(".dialog-main").prepend("<p class='input-alert'>required field <span>*</span></p>");
                         }
@@ -101,7 +105,9 @@ function listActions() {
                             $(".dialog-main").prepend("<p class='input-alert'>required field <span>*</span></p>");
                         }
                         if ($(".dialog-icons").children().hasClass("input-alert") !== true) {
-                            $(".dialog-icons").prepend("<p class='input-alert'>required field <span>*</span></p>");
+                            // $(".dialog-icons").append("<p class='input-alert alert-2'>required field <span>*</span></p>");
+                            $(".allIcons-header").fadeOut(250).fadeIn(250).fadeOut(250).fadeIn(250);
+                            $(".alert-2").insertBefore(".iconsWrapper");
                         }
                     }
                 }
@@ -122,7 +128,7 @@ function listActions() {
                                 "<div class='dialog-main'>" +
                                     "<input id='dialog-name' type='text' maxlength='30' placeholder='Name of the list'></input>" +
                                         "<div class='dialog-icons'>" +
-                                            "<p for='allIconsDialog'>Choose an icon</p>" +
+                                            "<p class='allIcons-header'>Choose an icon</p>" +
                                             "<div class='iconsWrapper'>" +
                                                 "<i class='fas fa-search'></i>" +
                                                 "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
