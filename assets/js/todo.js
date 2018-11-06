@@ -55,6 +55,7 @@ function listActions() {
             var isSaved = false;
             addClicked = true;
             insertDialog();
+            $("#dialog-name").focus()
             iconSearch(64);
             // Display usert text input in header
             $("#dialog-name").on("keyup", function() {
@@ -76,7 +77,7 @@ function listActions() {
             // Saves data & Removes Dialog on clicking save btn
             $("#dialog-save").on("click", function() {
                 var iconIsSelected = $(".dialog-header").children().hasClass("icon-selected");
-                if ($("#dialog-name").val() !== "" && iconIsSelected === true) {
+                if (($("#dialog-name").val() !== "" && iconIsSelected === true) === true) {
                     isSaved = true;
                     removeDialog(500);
                     newList();
@@ -84,6 +85,25 @@ function listActions() {
                     removeDoneTitle();
                     $(".todolist-name").val(currentList.listName);
                     addClicked = false;
+                } else {
+                    if (iconIsSelected === false && $("#dialog-name").val() !== "") {
+                        $(".input-alert").remove();
+                        if ($(".dialog-icons").children().hasClass("input-alert") !== true) {
+                            $(".dialog-icons").prepend("<p class='input-alert'>required field <span>*</span></p>");
+                        }
+                    } else if ($("#dialog-name").val() === "" && iconIsSelected === true) {
+                        $(".input-alert").remove();
+                        if ($(".dialog-main").children().hasClass("input-alert") !== true) {
+                            $(".dialog-main").prepend("<p class='input-alert'>required field <span>*</span></p>");
+                        }
+                    } else {
+                        if ($(".dialog-main").children().hasClass("input-alert") !== true) {
+                            $(".dialog-main").prepend("<p class='input-alert'>required field <span>*</span></p>");
+                        }
+                        if ($(".dialog-icons").children().hasClass("input-alert") !== true) {
+                            $(".dialog-icons").prepend("<p class='input-alert'>required field <span>*</span></p>");
+                        }
+                    }
                 }
             });
             // Removes dialog on click cancel button

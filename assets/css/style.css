@@ -74,6 +74,7 @@ main {
     color: white;
     background-image: linear-gradient(to bottom, rgb(205, 0, 0) 0%, rgb(255, 0, 0) 100%);
     padding: 1px 0px;
+    margin-bottom: 1.5em;
 }
 
 .dialog-header h3 {
@@ -140,9 +141,8 @@ main {
     border:none;
 }
 #dialog-name {
-    margin-top: 1.5em;
-}
 
+}
 .icons-loadBtn {
     height: 2em;
     border: none;
