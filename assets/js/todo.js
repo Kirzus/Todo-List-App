@@ -629,3 +629,19 @@ function removeDoneTitle() {
         $("h3").removeClass("hide");
     }
 }
+
+$(".night-btn").on("click", function() {
+    if ($(this).prop("checked") !== false) {
+        $("body").addClass("night-mode");
+        $(".todos-container, .input-container, header").css("background-color", "rgb(80, 80, 80)");
+        $(".todolist-container, .todos-container").css("border-color", "rgb(120, 120, 120)");
+        $("header").css("border-bottom", "1px solid rgb(80, 80, 80)");   
+        $("header").css("box-shadow", "0px 1px 3px rgb(40, 40, 40)");
+    } else {
+        $("body").removeClass("night-mode");
+        $(".todos-container, .input-container, header").css("background-color", "rgb(255, 255, 255)")
+        $(".todolist-container, .todos-container").css("border-color", "rgb(200, 200, 200)");
+        $("header").css("border-bottom", "1px solid rgb(255, 255, 255)");   
+        $("header").css("box-shadow", "0px 1px 3px rgb(200, 200, 200)");
+    }
+});

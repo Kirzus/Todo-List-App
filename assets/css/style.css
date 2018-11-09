@@ -4,6 +4,7 @@
     --main-bg-color: rgb(255, 255, 255);
     --main-color: black;
     --secondary-bg-color: rgb(255, 255, 255);
+    --secondary-color: white;
 }
 
 body {
@@ -40,7 +41,7 @@ header {
     justify-content: center;
     background: white;
     border-bottom: 1px solid rgb(255, 255, 255);
-    box-shadow: 0px 1px 3px rgb(200, 200, 200)
+    box-shadow: 0px 1px 3px rgb(200, 200, 200);
 }
 
 .title {
@@ -50,6 +51,12 @@ header {
 
 button {
     align-self: center; 
+}
+
+.night-mode {
+    background-color: rgb(40, 40, 40);
+    color: white;
+    border-color: black;
 }
 
 main {
@@ -302,7 +309,6 @@ main {
 
 .todolist:hover {
     padding-left: 0.5em;
-    color: rgb(0, 0, 0, 0.6);
     border-left: 5px solid rgb(205, 0, 0, 0.6);
 }
 
@@ -370,7 +376,7 @@ main {
 
 .input-container{
     display: flex;
-    margin: 5px 0px 5px 3px;
+    padding: 5px 0px 5px 3px;
     height: 2em;
     align-items: center;
 }
@@ -381,6 +387,8 @@ main {
 
 .todos-input {
     border: none;
+    background: inherit;
+    color: inherit;
     width: 100%;
     font-size: 16px;
 }
@@ -430,6 +438,7 @@ main {
 .todos-todo .todo > label {
     cursor: -webkit-grab; 
 }
+
 .todo-edit {
     background: rgb(0, 195, 0);
     margin-right: 0px;
