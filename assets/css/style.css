@@ -59,6 +59,8 @@ button {
     border-color: black;
 }
 
+
+
 main {
     display: flex;
     justify-content: center;
@@ -521,6 +523,12 @@ main {
 } 
 
 @media only screen and (max-width: 500px) {
+    body {
+        font-size: 14px;
+    }
+    h3 {
+        font-size: 16px;
+    }
     .dialog {
         width: 280px;
     }
@@ -540,5 +548,23 @@ main {
         display: grid;
         grid-template-columns: 10% minmax(250px,80%) 10%;
         grid-template-rows: 1fr 20%;
+    }
+    .todolist-name-container {
+        font-size: 18px;
+    }
+    .todos-input {
+        font-size: 16px;
+    }
+    .todo-delete,
+    .todo-edit {
+        font-size: 16px;
+        height: 28px;
+        width: 28px;
+    }
+    .todo {
+        padding: 0px 0px 0px 10px;
+    }
+    .todo:hover {
+        padding: 0px 0px 0px 10px;
     }
 } 

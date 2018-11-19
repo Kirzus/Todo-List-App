@@ -457,9 +457,19 @@ function hoverTodo() {
     $(".todo-delete").hide();
     $(".todos-todo, .todos-done").children(".todo").hover(
         function() {
+            if ($("body").hasClass("night-mode")) {
+                $(this).css("background", "rgb(75, 75, 75)");
+            } else {
+                $(this).css("background", "rgb(240, 240, 240)");
+            }
             $(this).children(".todo-edit").show();
             $(this).children(".todo-delete").show();
         }, function() {
+            if ($("body").hasClass("night-mode")) {
+                $(this).css("background", "inherit");
+            } else {
+                $(this).css("background", "inherit");
+            }
             $(this).children(".todo-edit").hide();
             $(this).children(".todo-delete").hide();
         }
