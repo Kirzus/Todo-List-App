@@ -141,6 +141,12 @@ function listActions() {
                             "</div>" +
                         "</div>"
                 );
+                if ($("body").hasClass("night-mode")) {
+                    $(".dialog").addClass("night-mode");
+                } else {
+                    $(".dialog").css("background", "white");
+                    $(".dialog").css("color", "black");
+                }
                 $(".dialog-container").hide().fadeIn(500);
                 $(".dialog").hide().slideDown(500);
             }
@@ -206,6 +212,12 @@ function listActions() {
                     "</div>" +
                 "</div>"
             );
+            if ($("body").hasClass("night-mode")) {
+                $(".dialog").addClass("night-mode");
+            } else {
+                $(".dialog").css("background", "white");
+                $(".dialog").css("color", "black");
+            }
             $(".dialog-container").hide().fadeIn(500);
             $(".dialog").hide().slideDown(500);
         }
