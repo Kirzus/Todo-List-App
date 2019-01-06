@@ -98,11 +98,18 @@ function listActions() {
                         $(".input-alert").remove();
                         $("#dialog-name").focus();
                         if ($(".dialog-main").children().hasClass("input-alert") !== true) {
-                            $(".dialog-main").prepend("<p class='input-alert'>required field <span>*</span></p>");
+                            $(".dialog-main").prepend("<p class='input-alert'>required field<span> *</span></p>");
+                            if ($("body").hasClass("night-mode")) {
+                                $(".input-alert").css("background", "rgb(40, 40, 40)");
+                            }
                         }
                     } else {
+                        $("#dialog-name").focus();
                         if ($(".dialog-main").children().hasClass("input-alert") !== true) {
-                            $(".dialog-main").prepend("<p class='input-alert'>required field <span>*</span></p>");
+                            $(".dialog-main").prepend("<p class='input-alert'>required field<span> *</span></p>");
+                            if ($("body").hasClass("night-mode")) {
+                                $(".input-alert").css("background", "rgb(40, 40, 40)");
+                            }
                         }
                         if ($(".dialog-icons").children().hasClass("input-alert") !== true) {
                             // $(".dialog-icons").append("<p class='input-alert alert-2'>required field <span>*</span></p>");
@@ -143,6 +150,11 @@ function listActions() {
                 );
                 if ($("body").hasClass("night-mode")) {
                     $(".dialog").addClass("night-mode");
+                    $(".dialog input").addClass("night-input");
+                    $(".dialog input").css("background-color", "rgb(80, 80, 80)");
+                    $(".iconsWrapper, .dialog-icons").css("background-color", "rgb(80, 80, 80)");
+                    $(".dialog input").css("border", "none");
+                    $(".dialog input").css("color", "white");
                 } else {
                     $(".dialog").css("background", "white");
                     $(".dialog").css("color", "black");
@@ -201,11 +213,16 @@ function listActions() {
                             "</div>" +
                             "<h3>" + currentList.listName + "</h3>" +
                         "</div>" +
-                        "<div class='dialog-icons'>" +
-                            "<label for='allIconsDialog'>Choose an icon</label><br>" +
-                            "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
-                            "<ul class='icons-grid'></ul>" +
-                            "<button class='icons-loadBtn'>Load more icons</button>" +
+                        "<div class='dialog-main'>" +
+                            "<div class='dialog-icons'>" +
+                                "<p class='allIcons-header'>Choose an icon</p>" +
+                                "<div class='iconsWrapper'>" +
+                                    "<i class='fas fa-search'></i>" +
+                                    "<input id='allIconsDialog' type='text' class='icons-search' placeholder='Enter a keyword'>" +
+                                "</div>" +
+                                "<ul class='icons-grid'></ul>" +
+                                "<button class='icons-loadBtn'>Load more icons</button>" +
+                            "</div>" +
                         "</div>" +
                         "<button id='dialog-cancel'>Cancel</button>" +
                         "<button id='dialog-save'>Save</button>" +
@@ -214,6 +231,9 @@ function listActions() {
             );
             if ($("body").hasClass("night-mode")) {
                 $(".dialog").addClass("night-mode");
+                $(".dialog input").addClass("night-input");
+                $(".dialog input").css("background-color", "rgb(80, 80, 80)");
+                $(".iconsWrapper, .dialog-icons").css("background-color", "rgb(80, 80, 80)");
             } else {
                 $(".dialog").css("background", "white");
                 $(".dialog").css("color", "black");
@@ -369,6 +389,12 @@ function deleteList() {
                 "</div>" +
             "</div>"
         );
+        if ($("body").hasClass("night-mode")) {
+            $(".dialog").addClass("night-mode");
+        } else {
+            $(".dialog").css("background", "white");
+            $(".dialog").css("color", "black");
+        }
         // Dialog opening anim 
         $(".dialog-container").hide().fadeIn(500);
         $(".dialog").hide().slideDown(500);
@@ -559,6 +585,9 @@ function renameTodo() {
         $("input.todo-text").focus();
         // Transfer the txt value to the changed tag input
         $("input.todo-text").val(txt);
+        if ($("body").hasClass("night-mode")) {
+            $(".todo-text").css("color", "white");
+        }
     });
     //Save data on input blur and switch back to a label tag
     $(".todos-container").on("blur", "input.todo-text", function() {
@@ -659,11 +688,13 @@ $(".night-btn").on("click", function() {
         $(".todolist-container, .todos-container").css("border-color", "rgb(120, 120, 120)");
         $("header").css("border-bottom", "1px solid rgb(80, 80, 80)");   
         $("header").css("box-shadow", "0px 1px 3px rgb(40, 40, 40)");
+        $(".todo-text").css("color", "white");
     } else {
         $("body").removeClass("night-mode");
         $(".todolist-container, .input-container, header").css("background-color", "rgb(255, 255, 255)")
         $(".todolist-container, .todos-container").css("border-color", "rgb(200, 200, 200)");
         $("header").css("border-bottom", "1px solid rgb(255, 255, 255)");   
         $("header").css("box-shadow", "0px 1px 3px rgb(200, 200, 200)");
+        $(".todo-text").css("color", "black");
     }
 });

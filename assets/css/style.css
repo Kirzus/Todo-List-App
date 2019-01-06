@@ -59,8 +59,6 @@ button {
     border-color: black;
 }
 
-
-
 main {
     display: flex;
     justify-content: center;
@@ -83,7 +81,7 @@ main {
     left:0;
     width: 100%;
     height: 100vh;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.8);
     align-items: center;
     justify-content: center;
     z-index: 2;
@@ -171,7 +169,10 @@ main {
     padding: 0.25em 0.25em;
     outline: none;
 }
-
+.night-input::placeholder{
+    color: lightgrey;
+    opacity: 0.8;
+}
 .icons-search {
     border:none;
 }
@@ -259,9 +260,6 @@ main {
     align-self: center;
 }
 
-.todolistsAdd-container:hover {
-    text-decoration-line: ;
-}
 
 .todolistsAdd-container i {
     cursor: pointer;
