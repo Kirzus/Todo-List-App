@@ -2,7 +2,7 @@
 
 This is a todolist web app, developped with Javascript & jQuery.
 
-* Features :
+## Features :
 
   * Create multiple todolists, in a single page. Give it a name, an icon and you are ready to go. 
   
