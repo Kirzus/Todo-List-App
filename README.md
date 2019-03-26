@@ -1,4 +1,4 @@
-# A todo list app, made simple.
+# A todolist app, made simple.
 
 This is a todolist web app, developped with Javascript & jQuery.
 
