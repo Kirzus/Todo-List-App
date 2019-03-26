@@ -1,2 +1,2 @@
-# A todo list app
+# A todo list app, made simple.
 
