@@ -16,4 +16,4 @@ This is a todolist web app, developped with Javascript & jQuery.
 
 - - - -
 
-### Developed by Arnaud Malanda
+                                           Developed by Arnaud Malanda
