@@ -14,3 +14,6 @@ This is a todolist web app, developped with Javascript & jQuery.
   
   * Click the night mode button to enter a darker theme, easier on the eye.
 
+- - - -
+
+### Developed by Arnaud Malanda
