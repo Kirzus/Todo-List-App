@@ -1,6 +1,6 @@
 # A todolist app, made simple.
 
-[Named Link](https://kirzus.github.io/Todo-List-App/ "Simplist") is a todolist web app, developped with Javascript & jQuery.
+[Simplist](https://kirzus.github.io/Todo-List-App/) is a todolist web app, developped with Javascript & jQuery.
 
 ## Features :
 
